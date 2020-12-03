@@ -1,0 +1,16 @@
+{
+    "name": "com.pushforward.extensions",
+    "rootNamespace": "PushForward",
+    "references": [
+        "GUID:631de3f7d5570f244af173e8b3a08706"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
