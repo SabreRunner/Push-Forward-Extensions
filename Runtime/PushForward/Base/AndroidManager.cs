@@ -73,6 +73,11 @@ namespace PushForward
             { toastCoroutine = Instance.StartCoroutine(ShowToastsQueueCoroutine()); }
         }
         #endregion // toast
+        #else
+        public static void ShowToast(string message)
+        {
+            Debug.Log("Can not show message '" + message + "' because not running on Android.");
+        }
         #endif
 
         private void Awake()
