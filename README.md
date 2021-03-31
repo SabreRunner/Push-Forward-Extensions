@@ -6,7 +6,7 @@ The biggest parts are the BaseMonoBehaviour which should be used instead of all 
 
 * Make sure [Git](https://git-scm.com/) is installed on your system and is in your PATH.
 * Open your Package Manager in Unity Editor, click the + button and "Add package from git url"
-* Insert the following URL:
+* Insert the following URL: https://github.com/SabreRunner/Push-Forward-Extensions.git
 * And confirm.
 
 Consult [install packages from git](https://docs.unity3d.com/Manual/upm-ui-giturl.html "Installing from a Git URL") for help.
