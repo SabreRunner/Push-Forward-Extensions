@@ -1,7 +1,7 @@
 {
   "name": "com.pushforward.extensions",
   "displayName": "Push Forward Extensions",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "unity": "2018.3",
   "description": "The Push Forward Extensions is a collection of useful components to help you get your project off the ground faster.",
   "keywords": [
@@ -16,7 +16,7 @@
   ],
   "author": {
     "name": "Eran 'Sabre Runner' Arbel",
-    "email": "sabrerunner@gmail.com",
+    "email": "eran.arbel.ea@gmail.com",
     "url": "https://github.com/sabrerunner"
   },
   "type": "tool"

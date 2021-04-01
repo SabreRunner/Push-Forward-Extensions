@@ -6,10 +6,14 @@ The biggest parts are the BaseMonoBehaviour which should be used instead of all 
 
 * Make sure [Git](https://git-scm.com/) is installed on your system and is in your PATH.
 * Open your Package Manager in Unity Editor, click the + button and "Add package from git url"
-* Insert the following URL: https://github.com/SabreRunner/Push-Forward-Extensions.git
+* Insert the following URL: [https://github.com/SabreRunner/Push-Forward-Extensions.git](https://github.com/SabreRunner/Push-Forward-Extensions.git)
 * And confirm.
 
 Consult [install packages from git](https://docs.unity3d.com/Manual/upm-ui-giturl.html "Installing from a Git URL") for help.
 
 ## How to Use
 
+There are several ways to use this package
+
+* Inherit BaseMonoBehaviour instead of MonoBehavior to get extra methods.
+* Use TransformExtender, AnimatorExtender, VideoExtender, etc. on any object with a Transform, Animator, or VideoPlayer component to expose additional methods from the component.

@@ -1,7 +1,9 @@
 {
-    "name": "com.pushforward.extensions",
+    "name": "com.pushforward.extensions.Examples.AndroidManager",
     "rootNamespace": "PushForward",
-    "references": [],
+    "references": [
+        "GUID:350918de390113144a3de2e555542db1"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
