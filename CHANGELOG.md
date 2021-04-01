@@ -1,4 +1,7 @@
 # CHANGELOG
 
+## 0.4.7
+* Removed the need to add the calling method's name in logging methods.
+
 ## 0.4.6
 * Fixed reference assemblies in examples.
