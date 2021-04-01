@@ -12,6 +12,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -111,7 +112,7 @@ public class BaseMonoBehaviour : MonoBehaviour
 	/// <param name="timeTag">The tag to use to group calls.</param>
 	/// <param name="debugMessage">The message to display.</param>
 	/// <param name="resetTimer">Wether to reset the timer when called.</param>
-	protected void TimedLog(string methodName, string timeTag, string debugMessage, bool resetTimer = false)
+	protected void TimedLog(string timeTag, string debugMessage, [CallerMemberName]string methodName = null, bool resetTimer = false)
 	{
 		double timeSinceLastCall;
         // if no dictionary, create one
@@ -136,22 +137,22 @@ public class BaseMonoBehaviour : MonoBehaviour
 	/// <summary>Temp logging is like debug but in green. Used for logs during actual debugging. Dispose of after use.</summary>
 	/// <param name="methodName">The name of the method in which this is used.</param>
 	/// <param name="debugMessage">The message to display.</param>
-	protected void Temp(string methodName, string debugMessage)
+	protected void Temp(string debugMessage, [CallerMemberName]string methodName = null)
 	{ Debug.Log(string.Format("<color=green>{0}.{1}.{2}: {3}</color>", this.ObjectPath, this.GetType().Name, methodName, debugMessage)); }
 	/// <summary>Regular debug log.</summary>
 	/// <param name="methodName">The name of the method in which this is used.</param>
 	/// <param name="logMessage">The message to display.</param>
-	protected void Log(string methodName, string logMessage)
+	protected void Log(string logMessage, [CallerMemberName]string methodName = null)
 	{ Debug.Log(string.Format("{0}.{1}.{2}: {3}", this.ObjectPath, this.GetType().Name, methodName, logMessage)); }
 	/// <summary>Warning log is marked with a yellow warning symbol.</summary>
 	/// <param name="methodName">The name of the method in which this is used.</param>
 	/// <param name="warningMessage">The message to display.</param>
-	protected void Warn(string methodName, string warningMessage)
+	protected void Warn(string warningMessage, [CallerMemberName]string methodName = null)
 	{ Debug.LogWarning(string.Format("{0}.{1}.{2}: {3}", this.ObjectPath, this.GetType().Name, methodName, warningMessage)); }
 	/// <summary>Error log is marked with a red error symbol.</summary>
 	/// <param name="methodName">The name of the method in which this is used.</param>
 	/// <param name="errorMessage">The message to display.</param>
-	protected void Error(string methodName, string errorMessage)
+	protected void Error(string errorMessage, [CallerMemberName]string methodName = null)
 	{ Debug.LogError(string.Format("{0}.{1}.{2}: {3}", this.ObjectPath, this.GetType().Name, methodName, errorMessage)); }
 	#endregion
 
