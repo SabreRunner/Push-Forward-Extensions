@@ -9,7 +9,9 @@ namespace PushForward.Examples.AndroidManager
 
         public void SendToast()
         {
+            #if UNITY_ANDROID
             AndroidManager.ShowToast(this.StringValue);
+            #endif
         }
     }
 }

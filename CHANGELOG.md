@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.4.8
+* Corrected wrong namespace.
+
 ## 0.4.7
 * Removed the need to add the calling method's name in logging methods.
 
