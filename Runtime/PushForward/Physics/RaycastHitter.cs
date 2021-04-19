@@ -10,8 +10,8 @@
 
 namespace PushForward
 {
+	using Base;
 	using UnityEngine;
-	using PushForward.Base;
 
 	public class RaycastHitter : BaseMonoBehaviour
 	{

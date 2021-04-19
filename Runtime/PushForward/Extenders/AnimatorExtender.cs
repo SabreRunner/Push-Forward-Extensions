@@ -13,7 +13,7 @@ namespace PushForward.Extenders
 	using System;
 	using UnityEngine;
 	using UnityEngine.Events;
-	using PushForward.ExtensionMethods;
+	using ExtensionMethods;
 	#endregion // using
 
 	[RequireComponent(typeof(Animator))]

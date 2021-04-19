@@ -1,7 +1,7 @@
 {
   "name": "com.pushforward.extensions",
   "displayName": "Push Forward Extensions",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "unity": "2018.3",
   "description": "The Push Forward Extensions is a collection of useful components to help you get your project off the ground faster.",
   "keywords": [

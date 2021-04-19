@@ -11,7 +11,7 @@ namespace PushForward.Extenders
 {
 	using UnityEngine;
 	using UnityEngine.Video;
-	using PushForward.ExtensionMethods;
+	using ExtensionMethods;
 
 	[RequireComponent(typeof(VideoPlayer))]
 	public class VideoPlayerExtender : BaseMonoBehaviour
