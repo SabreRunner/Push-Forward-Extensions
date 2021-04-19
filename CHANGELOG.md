@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.4.9
+* Fixed inaccessible GameEventBool...
+
 ## 0.4.8
 * Corrected wrong namespace.
 

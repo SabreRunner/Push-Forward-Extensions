@@ -20,6 +20,8 @@
         private int lerpIndex;
         private TransformLerp IndexedLerp => this.transformLerps[this.lerpIndex];
         
+        /// <summary>Moves the indexed lerp according to the given intermediate time.</summary>
+        /// <param name="currentTime">The time inside the lerp.</param>
         private void LerpRectSubroutine(float currentTime)
         {
             float fraction = currentTime / this.IndexedLerp.durationInSeconds;
@@ -42,6 +44,8 @@
                 this.IndexedLerp.targetRectTransform.eulerAngles, evaluatedFraction);
         }
         
+        /// <summary>Start the lerp of given index.</summary>
+        /// <param name="lerpIndex">The lerp index to play.</param>
         public void LerpRectTransform(int lerpIndex)
         {
             this.lerpIndex = lerpIndex;
