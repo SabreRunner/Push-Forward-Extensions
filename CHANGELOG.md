@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.4.11
+* Fixed ToastCache example access.
+
 ## 0.4.10
 * Fixed namespace errors.
 

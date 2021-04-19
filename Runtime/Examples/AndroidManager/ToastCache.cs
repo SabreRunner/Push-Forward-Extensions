@@ -1,5 +1,5 @@
 ﻿
-namespace PushForward.Examples.AndroidManager
+namespace PushForward.Examples
 {
     using PushForward;
 
