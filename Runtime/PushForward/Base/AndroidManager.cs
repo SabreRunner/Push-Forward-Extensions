@@ -1,18 +1,22 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace PushForward
 {
+    /// <summary>A singleton component that exposes Android functions.</summary>
     public class AndroidManager : SingletonBehaviour<AndroidManager>
     {
         #if UNITY_ANDROID
         #region general
+        /// <summary>Creates and returns the UnityPlayer class.</summary>
         private static AndroidJavaObject unityPlayer;
-        public static AndroidJavaObject UnityPlayer => unityPlayer = unityPlayer ?? new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        public static AndroidJavaObject UnityPlayer => unityPlayer ??= new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        /// <summary>Creates and returns Unity's CurrentActivity class.</summary>
         private static AndroidJavaObject unityActivity;
-        public static AndroidJavaObject UnityActivity => unityActivity = unityActivity ?? UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+        public static AndroidJavaObject UnityActivity => unityActivity ??= UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
 
+        /// <summary>Creates the singleton object if it's not present.</summary>
         private static void CheckInstance()
         {
             if (Instance != null) { return; }
@@ -23,14 +27,20 @@ namespace PushForward
         #endregion // general
 
         #region toast
+        /// <summary>The choice for how long should the toast be.</summary>
         public enum ToastDuration { Short, Long }
+        /// <summary>The description structure for a toast.</summary>
         private struct ToastStructure
         {
+            /// <summary>The message to show.</summary>
             public string message;
+            /// <summary>The duration for the toast.</summary>
             public ToastDuration duration;
 
+            /// <summary>The toast duration in seconds.</summary>
             public float DurationInSeconds()
                 => this.duration == ToastDuration.Short ? 2f : 3.5f;
+            /// <summary>Static creation method for the structure.</summary>
             public static ToastStructure CreateToast(string newMessage, ToastDuration newDuration = ToastDuration.Short)
                 => new ToastStructure { message = newMessage, duration = newDuration};
         }
