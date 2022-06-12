@@ -1,12 +1,22 @@
-namespace PushForward
-{
-	using UnityEngine;
-	using UnityEngine.Events;
+/*
+ * PredicateTrigger
+ *
+ * Description: A connective component between complicated outputs, including some simple validation, and simple specific events/calls. 
+ *
+ * Created by: Eran "Sabre Runner" Arbel.
+ *
+ * Last Updated: 2022-06-12
+*/
 
-	public class PredicateTrigger : BaseMonoBehaviour
+using UnityEngine;
+using UnityEngine.Events;
+
+namespace PushForward.Base
+{
+	public class PredicateTrigger : MonoBehaviour
 	{
-		[SerializeField] private UnityEvent predicateTrueEvent;
-		[SerializeField] private UnityEvent predicateFalseEvent;
+		[SerializeField, Tooltip("Invoked when predicate is true.")] private UnityEvent predicateTrueEvent;
+		[SerializeField, Tooltip("Invoked when predicate is false.")] private UnityEvent predicateFalseEvent;
 
 		public bool Toggle { get; set; }
 

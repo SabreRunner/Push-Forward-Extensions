@@ -7,6 +7,8 @@
 	Last Updated: 2018-11-21
 */
 
+using UnityEngine.Events;
+
 namespace PushForward.Extenders
 {
 	using UnityEngine;
@@ -14,11 +16,13 @@ namespace PushForward.Extenders
 	using ExtensionMethods;
 
 	[RequireComponent(typeof(VideoPlayer))]
-	public class VideoPlayerExtender : BaseMonoBehaviour
+	public class VideoPlayerExtender : MonoBehaviour
 	{
 		[SerializeField] private VideoPlayer videoPlayer;
-		[SerializeField] bool resetFrameOnEnable = true;
-		[SerializeField] bool stopOnDisable = true;
+		[SerializeField] private bool playOnEnable = true;
+		[SerializeField] private bool resetFrameOnEnable;
+		[SerializeField] private bool stopOnDisable = true;
+		[SerializeField] private UnityEvent eventOnEnd;
 
 		private float videoLengthInSeconds;
 
@@ -73,19 +77,30 @@ namespace PushForward.Extenders
 			else { this.videoPlayer.Play(); }
 		}
 
+		private void InvokeEndEvent(VideoPlayer vp)
+		{
+			this.eventOnEnd?.Invoke();
+		}
+
+		#region engine
+		#if UNITY_EDITOR
 		private void OnValidate()
 		{
 			this.videoPlayer = this.GetComponent<VideoPlayer>();
 			this.videoLengthInSeconds = this.videoPlayer.frameCount / this.videoPlayer.frameRate;
 		}
+		#endif
 
 		private void OnEnable()
 		{
-			if (this.resetFrameOnEnable)
+			if (this.playOnEnable || this.resetFrameOnEnable)
 			{
 				this.videoPlayer.Play();
-				this.videoPlayer.Pause();
+				if (this.resetFrameOnEnable)
+				{ this.videoPlayer.Pause(); }
 			}
+
+			this.videoPlayer.loopPointReached += this.InvokeEndEvent;
 		}
 
 		private void OnDisable()
@@ -97,6 +112,9 @@ namespace PushForward.Extenders
 				this.videoPlayer.Pause();
 				this.videoPlayer.Stop();
 			}
+
+			this.videoPlayer.loopPointReached -= this.InvokeEndEvent;
 		}
+		#endregion // engine
 	}
 }

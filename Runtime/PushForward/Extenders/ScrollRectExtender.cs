@@ -1,4 +1,13 @@
-﻿
+﻿/*
+ * ScrollRect Extender
+ *
+ * Description: Additional useful methods for ScrollRect (Lerping to value, triggering events 
+ *
+ * Created by: Eran "Sabre Runner" Arbel.
+ *
+ * Last Updated: 2022-06-12
+*/
+
 namespace PushForward.Extenders
 {
     #region using
@@ -10,12 +19,12 @@ namespace PushForward.Extenders
     #endregion // using
 
     [RequireComponent(typeof(ScrollRect))]
-    public class ScrollRectExtender : BaseMonoBehaviour
+    public class ScrollRectExtender : MonoBehaviour
     {
         [Serializable]
         public class ScrollEvent
         {
-            public enum CheckFor { X, Y, Both }
+            public enum CheckFor { Unknown, X, Y, Both }
 
             #region fields
             public string elementName;
@@ -23,13 +32,13 @@ namespace PushForward.Extenders
             public Vector2 low;
             public Vector2 high;
             public bool previousInside;
-            
+
             public UnityEvent actionOnEnter;
             public UnityEvent actionOnExit;
             #endregion // fields
 
             /// <summary>Check if the value is inside the specified area.</summary>
-            /// <param name="scrollValue">The vector2 defining the position of the scrollrect</param>
+            /// <param name="scrollValue">The vector2 defining the position of the scrollRect</param>
             /// <returns>True if inside the area, false otherwise.</returns>
             private bool ValueInsideArea(Vector2 scrollValue)
             {
@@ -41,13 +50,13 @@ namespace PushForward.Extenders
                     default: throw new ArgumentOutOfRangeException();
                 }
             }
-            
+
             /// <summary>Check a scroll value against the event and trigger accordingly.</summary>
             /// <param name="scrollValue">The value of the scroll rect to check</param>
             public void CheckEvent(Vector2 scrollValue)
             {
                 bool newInside = this.ValueInsideArea(scrollValue);
-                
+
                 if (this.previousInside && !newInside)
                 { this.actionOnExit?.Invoke(); }
                 else if (!this.previousInside && newInside)
@@ -56,7 +65,7 @@ namespace PushForward.Extenders
                 this.previousInside = newInside;
             }
         }
-        
+
         [SerializeField] private ScrollRect scrollRect;
         [SerializeField] private float lerpSpeed = 1f;
         [SerializeField] private ScrollEvent[] scrollEvents;
@@ -86,17 +95,14 @@ namespace PushForward.Extenders
                     this.scrollRect.verticalNormalizedPosition = Mathf.Lerp(a, value, t);
                 }, () => !t.FloatEqual(1));
         }
-        
+
         public void ValueChanged(Vector2 value)
         {
             foreach (ScrollEvent scrollEvent in this.scrollEvents)
             { scrollEvent.CheckEvent(value); }
         }
 
-        private void OnEnable()
-        {
-            this.ValueChanged(this.scrollRect.normalizedPosition);
-        }
+        private void OnEnable() => this.ValueChanged(this.scrollRect.normalizedPosition);
 
         private void OnValidate()
         {

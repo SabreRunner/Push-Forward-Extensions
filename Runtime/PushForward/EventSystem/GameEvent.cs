@@ -1,3 +1,11 @@
+/*
+	GameEvent
+
+	Description: The building block of the Pub/Sub framework.
+
+	Created by: Eran "Sabre Runner" Arbel.
+	Last Updated: 2020-02-11
+*/
 
 namespace PushForward.EventSystem
 {

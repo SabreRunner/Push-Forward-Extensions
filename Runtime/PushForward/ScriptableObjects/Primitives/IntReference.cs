@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿/*
+	IntReference
+
+	Description: A reference to an IntVariable Scriptable Object
+
+	Created by: Eran "Sabre Runner" Arbel.
+	Last Updated: 2020-02-11
+*/
 
 namespace PushForward.ScriptableObjects.Primitives
 {

@@ -4,7 +4,7 @@
 	Description: Extends the Animator class.
 
 	Created by: Eran "Sabre Runner" Arbel.
-	Last Updated: 2018-11-21
+	Last Updated: 2020-02-11
 */
 
 namespace PushForward.Extenders
@@ -17,15 +17,16 @@ namespace PushForward.Extenders
 	#endregion // using
 
 	[RequireComponent(typeof(Animator))]
-	public class AnimatorExtender : BaseMonoBehaviour
+	public class AnimatorExtender : MonoBehaviour
 	{
 		#region Inspector Fields
 		[SerializeField] private Animator animator;
 		#endregion // inspector fields
 
 		#region Properties
-		int CurrentStateHash => this.animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
-		float CurrentStateNormalisedTime => this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+		private int CurrentStateHash => this.animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+		// ReSharper disable once UnusedMember.Local
+		private float CurrentStateNormalisedTime => this.animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 		#endregion // properties
 
 		#region Private Fields
@@ -46,7 +47,7 @@ namespace PushForward.Extenders
 		}
 
 		[Tooltip("Enter events you want triggered here. Then call them from inside the animation.")]
-		[SerializeField] AnimationEvent[] animationEventArray = null;
+		[SerializeField] private AnimationEvent[] animationEventArray;
 
 		public void InvokeEvent(int eventNumber)
 		{

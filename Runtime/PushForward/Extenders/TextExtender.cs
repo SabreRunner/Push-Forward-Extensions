@@ -13,7 +13,7 @@ namespace PushForward.Extenders
 	using UnityEngine.UI;
 
 	[RequireComponent(typeof(Text))]
-	public class TextExtender : BaseMonoBehaviour
+	public class TextExtender : MonoBehaviour
 	{
 		[SerializeField] private Text text;
 		[SerializeField] private int decimalAccuracy = 4;
@@ -25,13 +25,13 @@ namespace PushForward.Extenders
 		{ this.text.text = integer.ToString(); }
 
 		public void SetFloat(float fl)
-		{ this.text.text = fl.ToString($"N{decimalAccuracy}"); }
+		{ this.text.text = fl.ToString($"N{this.decimalAccuracy}"); }
 
 		public void SetVector3(Vector3 vec3)
-		{ this.text.text = vec3.StringRepresentation(decimalAccuracy); }
+		{ this.text.text = vec3.StringRepresentation(this.decimalAccuracy); }
 
 		public void SetVector2(Vector2 vec2)
-		{ this.text.text = vec2.StringRepresentation(decimalAccuracy); }
+		{ this.text.text = vec2.StringRepresentation(this.decimalAccuracy); }
 
 		private void OnValidate()
 		{

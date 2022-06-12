@@ -1,3 +1,11 @@
+/*
+	FloatReference
+
+	Description: A reference to a FloatVariable Scriptable Object.
+
+	Created by: Eran "Sabre Runner" Arbel.
+	Last Updated: 2020-02-11
+*/
 
 namespace PushForward.ScriptableObjects.Primitives
 {
@@ -7,8 +15,8 @@ namespace PushForward.ScriptableObjects.Primitives
     public class FloatReference
     {
 		public bool useOverride = true;
-		public float overrideValue = 0f;
-        public bool useInitial = false;
+		public float overrideValue;
+        public bool useInitial;
         public FloatVariable variable;
 
         public float Value => this.useOverride ? this.overrideValue

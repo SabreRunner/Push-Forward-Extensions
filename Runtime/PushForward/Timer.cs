@@ -17,7 +17,7 @@ namespace PushForward
 	using ExtensionMethods;
 	#endregion // using
 
-	public class Timer : BaseMonoBehaviour
+	public class Timer : MonoBehaviour
 	{
 		/// <summary>How to display the timer.</summary>
 		public enum DisplayMode { HHMMSS, HHMMSStt, MMSS, MMSStt, SS, SStt }
@@ -96,15 +96,15 @@ namespace PushForward
 		#region Setup
 		/// <summary>Set Timer parameters.</summary>
 		/// <param name="timerSpan">The time.</param>
-		/// <param name="displayMode">How to display it.</param>
-		/// <param name="timerActions">Actions to take in specific times.</param>
-		/// <param name="timerOverActions">Actions to take when timer over.</param>
-		public void Set(TimeSpan timerSpan, DisplayMode displayMode, TimerEvent[] timerActions, TimerEvent[] timerOverActions)
+		/// <param name="newDisplayMode">How to display it.</param>
+		/// <param name="newTimerActions">Actions to take in specific times.</param>
+		/// <param name="newTimerOverActions">Actions to take when timer over.</param>
+		public void Set(TimeSpan timerSpan, DisplayMode newDisplayMode, TimerEvent[] newTimerActions, TimerEvent[] newTimerOverActions)
 		{
 			this.time = timerSpan;
-			this.displayMode = displayMode;
-			this.timerActions = timerActions;
-			this.timerOverActions = timerOverActions;
+			this.displayMode = newDisplayMode;
+			this.timerActions = newTimerActions;
+			this.timerOverActions = newTimerOverActions;
 		}
 
 		/// <summary>Reset the timer to the given time span.</summary>
@@ -132,13 +132,6 @@ namespace PushForward
 								+ this.time.Minutes.ToString("D2") + ":"
 								+ this.time.Seconds.ToString("D2");
 					break;
-				default:
-				case DisplayMode.HHMMSStt:
-					output = this.time.Hours + ":"
-								+ this.time.Minutes.ToString("D2") + ":"
-								+ this.time.Seconds.ToString("D2") + "."
-								+ this.time.Milliseconds.ToString("D3").Remove(2);
-					break;
 				case DisplayMode.MMSS:
 					output = this.time.Minutes + ":" 
 					            + this.time.Seconds.ToString("D2");
@@ -150,6 +143,13 @@ namespace PushForward
 					break;
 				case DisplayMode.SS: output = ((int)this.time.TotalSeconds).ToString(); break;
 				case DisplayMode.SStt: output = this.time.TotalSeconds.ToString("N3"); break;
+				// case DisplayMode.HHMMSStt:
+				default:
+					output = this.time.Hours + ":"
+					                         + this.time.Minutes.ToString("D2") + ":"
+					                         + this.time.Seconds.ToString("D2") + "."
+					                         + this.time.Milliseconds.ToString("D3").Remove(2);
+					break;
 			}
 
 			this.outputText.text = output;

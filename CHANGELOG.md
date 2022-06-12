@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.0
+* Lots of changes and additions. Too many to count.
+* More documentation.
+
 ## 0.4.11
 * Fixed ToastCache example access.
 

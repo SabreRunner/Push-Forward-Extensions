@@ -1,4 +1,12 @@
-﻿
+﻿/*
+	GameEventPrefabListener
+
+	Description: The receiver for GameEventPrefabs
+
+	Created by: Eran "Sabre Runner" Arbel.
+	Last Updated: 2020-02-11
+*/
+
 namespace PushForward.EventSystem
 {
     using Base;
@@ -15,4 +23,5 @@ namespace PushForward.EventSystem
         protected override void OnEventRaised()
         { this.prefabResponse?.Invoke(this.gameEventPrefab.prefab); }
     }
+
 }

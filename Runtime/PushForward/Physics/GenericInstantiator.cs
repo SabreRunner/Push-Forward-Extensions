@@ -1,9 +1,17 @@
+/*
+	GenericInstantiator
 
-namespace PushForward
+	Description: Simplifies (especially repetitive) instantiation of prefabs.
+
+	Created by: Eran "Sabre Runner" Arbel.
+	Last Updated: 2020-02-11
+*/
+
+using UnityEngine;
+
+namespace PushForward.Physics
 {
-	using UnityEngine;
-
-	public class GenericInstantiator : BaseMonoBehaviour
+	public class GenericInstantiator : MonoBehaviour
 	{
 		// ReSharper disable once MemberCanBePrivate.Global
 		public enum Lineage { Child, Sibling, Parent, Root }
@@ -33,12 +41,13 @@ namespace PushForward
 		{
 			if (this.Prefab == null)
 			{ return null; }
-			
+
 			// instantiate according to lineage
 			GameObject newObject = Instantiate(this.prefab,
 											   this.lineage == Lineage.Child ? this.transform
 												: this.lineage == Lineage.Sibling
-													|| this.lineage == Lineage.Parent ? this.transform.parent : null);
+												  // ReSharper disable once Unity.InefficientPropertyAccess
+												  || this.lineage == Lineage.Parent ? this.transform.parent : null);
 
 			// add required offsets
 			newObject.transform.localPosition += this.positionOffset
@@ -52,7 +61,7 @@ namespace PushForward
 		{
 			this.Instantiate();
 		}
-		
+
 		public GameObject InstantiateOtherDontReplace(GameObject otherPrefab)
 		{
 			GameObject tempSave = this.Prefab;

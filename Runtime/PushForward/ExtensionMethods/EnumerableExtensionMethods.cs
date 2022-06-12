@@ -12,10 +12,11 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
+
 #endregion
 
 /// <summary>Helper methods for generic collections</summary>
+// ReSharper disable once CheckNamespace - Needs to be available everywhere
 public static class EnumerableExtensionMethods
 {
 	#region do for each
@@ -27,14 +28,15 @@ public static class EnumerableExtensionMethods
 	public static IEnumerable<T> DoForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
 	{
 		if (action == null)
-		{ throw new ArgumentException("Action can't be null", "action"); }
+		{ throw new ArgumentException("Action can't be null", nameof(action)); }
 
 		if (enumerable == null)
-		{ throw new ArgumentException("Array can't be null", "enumerable"); }
+		{ throw new ArgumentException("Array can't be null", nameof(enumerable)); }
 
-		foreach (T enumerate in enumerable)
+		IEnumerable<T> doForEach = enumerable as T[] ?? enumerable.ToArray();
+		foreach (T enumerate in doForEach)
 		{ action(enumerate); }
-		return enumerable;
+		return doForEach;
 	}
 	/// <summary>Uses a given action on every item in the array.</summary>
 	/// <typeparam name="T">Any object or primitive.</typeparam>

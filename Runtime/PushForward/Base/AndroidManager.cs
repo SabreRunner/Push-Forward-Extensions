@@ -1,98 +1,132 @@
+﻿/*
+	AndroidManager
+
+	Description: Useful methods and fields for handling Android.
+
+	Created by: Eran "Sabre Runner" Arbel.
+	Last Updated: 2020-02-11
+*/
+
+#if UNITY_ANDROID
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PushForward
+namespace PushForward.Base
 {
-    /// <summary>A singleton component that exposes Android functions.</summary>
     public class AndroidManager : SingletonBehaviour<AndroidManager>
     {
-        #if UNITY_ANDROID
+        #region consts
+        public const string ArrayListPackageName = "java.util.ArrayList";
+        public const string IntentPackageName = "android.content.Intent";
+        public const string GetMethodName = "get";
+        public const string SizeMethodName = "size";
+        public const string ToStringMethodName = "toString";
+        public const string HashCodeMethodName = "hashCode";
+        public const string EqualsMethodName = "equals";
+        public const string AddMethodName = "add";
+        public const string SetActionMethodName = "setAction";
+        public const string AddFlagsMethodName = "addFlags";
+        public const string FlagReceiverForeground = "FLAG_RECEIVER_FOREGROUND";
+        public const string SendBroadcastMethodName = "sendBroadcast";
+        public const string ToArrayMethodName = "toArray";
+        public const string IteratorMethodName = "iterator";
+        public const string HasNextMethodName = "hasNext";
+        public const string NextMethodName = "next";
+        #endregion // consts
+        
         #region general
-        /// <summary>Creates and returns the UnityPlayer class.</summary>
         private static AndroidJavaObject unityPlayer;
-        public static AndroidJavaObject UnityPlayer => unityPlayer ??= new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-        /// <summary>Creates and returns Unity's CurrentActivity class.</summary>
-        private static AndroidJavaObject unityActivity;
-        public static AndroidJavaObject UnityActivity => unityActivity ??= UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
+        public static AndroidJavaObject UnityPlayer
+            => unityPlayer = unityPlayer ?? new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+        private static AndroidJavaObject currentActivity;
+        public static AndroidJavaObject CurrentActivity
+            => currentActivity = currentActivity ?? UnityPlayer?.GetStatic<AndroidJavaObject>("currentActivity");
 
-        /// <summary>Creates the singleton object if it's not present.</summary>
+	/// <summary>Instantiates a new Android Manager if none exist.</summary>
         private static void CheckInstance()
         {
             if (Instance != null) { return; }
-
+            
             GameObject gameObject = new GameObject("Android Manager");
             gameObject.AddComponent<AndroidManager>();
         }
         #endregion // general
-
+        
         #region toast
-        /// <summary>The choice for how long should the toast be.</summary>
         public enum ToastDuration { Short, Long }
-        /// <summary>The description structure for a toast.</summary>
         private struct ToastStructure
         {
-            /// <summary>The message to show.</summary>
             public string message;
-            /// <summary>The duration for the toast.</summary>
             public ToastDuration duration;
 
-            /// <summary>The toast duration in seconds.</summary>
             public float DurationInSeconds()
                 => this.duration == ToastDuration.Short ? 2f : 3.5f;
-            /// <summary>Static creation method for the structure.</summary>
+
+            public override string ToString()
+                => this.message + "(" + this.duration + ")";
+
             public static ToastStructure CreateToast(string newMessage, ToastDuration newDuration = ToastDuration.Short)
                 => new ToastStructure { message = newMessage, duration = newDuration};
         }
         private static AndroidJavaClass toastClass;
-        private static AndroidJavaClass ToastClass => toastClass = toastClass ?? new AndroidJavaClass("android.widget.Toast");
+        private static AndroidJavaClass ToastClass
+            => toastClass = toastClass ?? new AndroidJavaClass("android.widget.Toast");
         private static AndroidJavaObject toastObject;
-        private static AndroidJavaObject ToastObject => toastObject = toastObject ?? ToastClass.CallStatic<AndroidJavaObject>("makeText", unityActivity, string.Empty, 0);
+        private static AndroidJavaObject ToastObject
+            => toastObject = toastObject ?? ToastClass.CallStatic<AndroidJavaObject>("makeText", currentActivity, string.Empty, 0);
         private static readonly Queue<ToastStructure> ToastsQueue = new Queue<ToastStructure>(2);
         private static Coroutine toastCoroutine;
 
+	/// <summary>Shows a toast according to the given toast structure.</summary>
         private static void ShowToast(ToastStructure toast)
         {
-            // Instance.Log("ShowToast", "Showing " + toast.message + " for a " + toast.duration + " time.");
-            UnityActivity?.Call("runOnUiThread", new AndroidJavaRunnable(() =>
+            // Instance.Log("ShowToast", "Queue Remains: " + ToastsQueue.Count + "\nShowing: " + toast);
+            CurrentActivity?.Call("runOnUiThread", new AndroidJavaRunnable(() =>
             {
                 ToastObject.Call("setText", toast.message);
                 ToastObject.Call("setDuration", (int)toast.duration);
                 ToastObject.Call("show");
             }));
+            // Instance.Log("ShowToast", "Toasted: " + toast);
         }
-
+        
         private static IEnumerator ShowToastsQueueCoroutine()
         {
             while (ToastsQueue.Count > 0)
             {
                 ToastStructure toast = ToastsQueue.Dequeue();
-                ShowToast(toast);
-                yield return new WaitForSeconds(toast.DurationInSeconds());
+                try
+                { ShowToast(toast); }
+                catch (Exception exception)
+                { Instance.Error("ShowToastsQueueCoroutine", "Failed to send " + toast + "\n" + exception); }
+                yield return new WaitForSeconds(toast.DurationInSeconds() + 0.5f);
             }
 
-            AndroidManager.toastCoroutine = null;
+            toastCoroutine = null;
         }
-
+        
         public static void ShowToast(string message, ToastDuration duration = ToastDuration.Short)
         {
             CheckInstance();
-
+            
             ToastsQueue.Enqueue(ToastStructure.CreateToast(message, duration));
             if (toastCoroutine == null)
             { toastCoroutine = Instance.StartCoroutine(ShowToastsQueueCoroutine()); }
         }
         #endregion // toast
-        #else
-        public static void ShowToast(string message)
-        {
-            Debug.Log("Can not show message '" + message + "' because not running on Android.");
-        }
-        #endif
 
+        [ContextMenu("Test")]
+        public void Test()
+        {
+            ShowToast("Test");
+        }
+        
         private void Awake()
         {
             this.SetInstance(this);
         }
     }
 }
+#endif

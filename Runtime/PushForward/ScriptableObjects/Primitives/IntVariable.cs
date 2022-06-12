@@ -1,4 +1,12 @@
-﻿
+﻿/*
+	IntVariable
+
+	Description: A Scriptable Object for saving ints
+
+	Created by: Eran "Sabre Runner" Arbel.
+	Last Updated: 2020-02-11
+*/
+
 namespace PushForward.ScriptableObjects.Primitives
 {
     using System;

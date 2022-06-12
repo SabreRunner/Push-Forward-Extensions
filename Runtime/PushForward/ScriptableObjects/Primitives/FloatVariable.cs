@@ -1,4 +1,12 @@
-﻿
+﻿/*
+	FloatVariable
+
+	Description: Scriptable Object for storing floats.
+
+	Created by: Eran "Sabre Runner" Arbel.
+	Last Updated: 2020-02-11
+*/
+
 namespace PushForward.ScriptableObjects.Primitives
 {
     using System;

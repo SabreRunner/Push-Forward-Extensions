@@ -6,13 +6,13 @@
 	Last Updated: 2018-07-19
 */
 
+// ReSharper disable once CheckNamespace - Needs to be available in the engine
 namespace UnityEngine
 {
 	#region using
-	using System.Text;
-	using System;
+
 	using System.Collections.Generic;
-	using UnityEngine.EventSystems;
+	using EventSystems;
 	#endregion
 
 	/// <summary>Helper methods for Unity Engine objects and behaviours</summary>

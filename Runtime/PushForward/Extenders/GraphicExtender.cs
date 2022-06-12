@@ -15,7 +15,7 @@ namespace PushForward.Extenders
 	using UnityEngine.UI;
 	#endregion
 
-	public class GraphicExtender : BaseMonoBehaviour
+	public class GraphicExtender : MonoBehaviour
 	{
 		#region inspector fields
 		[Tooltip("The graphic that requires fading.")]
@@ -23,59 +23,54 @@ namespace PushForward.Extenders
 		[Tooltip("Whether to fade the colour of the graphic.")]
 		[SerializeField] private bool fadeColour = true;
 		[Tooltip("Whether to fade the material of the graphic.")]
-		[SerializeField] private bool fadeMaterial = false;
+		[SerializeField] private bool fadeMaterial;
 		[Tooltip("This event will trigger when the fade in is finished.")]
-		[SerializeField] private UnityEvent triggerAtFadeInEnd = null;
+		[SerializeField] private UnityEvent triggerAtFadeInEnd;
 		[Tooltip("This event will trigger when the fade out is finished.")]
-		[SerializeField] private UnityEvent triggerAtFadeOutEnd = null;
+		[SerializeField] private UnityEvent triggerAtFadeOutEnd;
 		#endregion // inspector fields
 
 		#region properties
-		public bool Interactible
+		public bool Interactable
 		{
-			get { return this.enabled; }
-			set { this.enabled = value; }
+			get => this.enabled;
+			set => this.enabled = value;
 		}
 
 		public Color Colour
 		{
-			get { return this.graphicToExtend.color; }
-			set { this.graphicToExtend.color = value; }
+			get => this.graphicToExtend.color;
+			set => this.graphicToExtend.color = value;
 		}
 
 		public string ColourString
 		{
-			get { return ColorUtility.ToHtmlStringRGBA(this.graphicToExtend.color); }
+			get => ColorUtility.ToHtmlStringRGBA(this.graphicToExtend.color);
 			set
 			{
-				Color colour;
-				ColorUtility.TryParseHtmlString(value, out colour);
-				this.graphicToExtend.color = colour;
+				ColorUtility.TryParseHtmlString(value, out Color color);
+				this.graphicToExtend.color = color;
 			}
 		}
 
+		// ReSharper disable Unity.InefficientPropertyAccess
 		/// <summary>This graphic's colour alpha.</summary>
 		public float GraphicColourAlpha
 		{
-			get { return this.graphicToExtend.color.a; }
-			set
-			{
-				this.graphicToExtend.color =
-				  new Color(this.graphicToExtend.color[0], this.graphicToExtend.color[1], this.graphicToExtend.color[2], value);
-			}
+			get => this.graphicToExtend.color.a;
+			set => this.graphicToExtend.color
+					   = new Color(this.graphicToExtend.color[0], this.graphicToExtend.color[1], this.graphicToExtend.color[2], value);
 		}
 
 		/// <summary>This graphic's material alpha.</summary>
 		public float GraphicMaterialAlpha
 		{
-			get { return this.graphicToExtend.material.color.a; }
-			set
-			{
-				this.graphicToExtend.material.color = new Color(this.graphicToExtend.material.color[0],
-																this.graphicToExtend.material.color[1],
-																this.graphicToExtend.material.color[2], value);
-			}
+			get => this.graphicToExtend.material.color.a;
+			set => this.graphicToExtend.material.color = new Color(this.graphicToExtend.material.color[0],
+																   this.graphicToExtend.material.color[1],
+																   this.graphicToExtend.material.color[2], value);
 		}
+		// ReSharper restore Unity.InefficientPropertyAccess
 		#endregion // properties
 
 		#region private fields

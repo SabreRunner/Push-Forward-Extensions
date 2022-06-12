@@ -1,9 +1,19 @@
-namespace PushForward
+/*
+ * Scene Management
+ *
+ * Description: Provides simple calls for scene management. 
+ *
+ * Created by: Eran "Sabre Runner" Arbel.
+ *
+ * Last Updated: 2022-06-12
+*/
+
+namespace PushForward.Base
 {
 	#region using
+	using ExtensionMethods;
 	using UnityEngine;
 	using UnityEngine.SceneManagement;
-	using ExtensionMethods;
 	#endregion // using
 
 	public class SceneManagement : SingletonBehaviour<SceneManagement>
@@ -17,7 +27,7 @@ namespace PushForward
 		[SerializeField] private GameObject[] objectsToDeactivateOnUnload;
 		[Tooltip("Set the objects to activate on unload.")]
 		[SerializeField] private GameObject[] objectsToActivateOnUnload;
-		
+
 		public void SetActiveObjectsOnLoad()
 		{
 			this.objectsToDeactivateOnLoad.DoForEach(go => go.Deactivate());
@@ -34,19 +44,12 @@ namespace PushForward
 		#region scene loading
 		private bool unloading;
 
-		/// <summary>Loads a scene by name.</summary>
-		/// <param name="sceneName">The scene name (must be exact)</param>
-		public void LoadScene(string sceneName)
-		{
-			SceneManager.LoadScene(sceneName);
-		}
-
 		public void ReloadScene()
 		{
 			int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
 			this.unloading = true;
-			
+
 			this.SetActiveObjectsOnUnload();
 
 			//SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
@@ -63,9 +66,7 @@ namespace PushForward
 
 			this.SetActiveObjectsOnUnload();
 
-			if (forwards)
-			{ sceneIndex = sceneIndex.CircleAdd(1, 0, totalScenes - 1); }
-			else { sceneIndex = sceneIndex.CircleSubtract(1, 0, totalScenes - 1); }
+			sceneIndex = forwards ? sceneIndex.CircleAdd(1, 0, totalScenes - 1) : sceneIndex.CircleSubtract(1, 0, totalScenes - 1);
 
 			SceneManager.LoadScene(sceneIndex);
 		}
@@ -79,7 +80,7 @@ namespace PushForward
 		#region engine
 		private void Awake()
 		{
-			base.SetInstance(this);
+			this.SetInstance(this);
 			this.SetActiveObjectsOnLoad();
 		}
 

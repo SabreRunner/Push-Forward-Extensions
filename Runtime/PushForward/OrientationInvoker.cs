@@ -13,7 +13,7 @@ namespace PushForward
 	using UnityEngine;
 	using UnityEngine.Events;
 
-	public class OrientationInvoker : BaseMonoBehaviour
+	public class OrientationInvoker : MonoBehaviour
 	{
 		#region fields
 		[SerializeField] private UnityEvent onLandscape;

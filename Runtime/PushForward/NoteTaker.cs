@@ -8,14 +8,17 @@
 
 using UnityEngine;
 
-public class NoteTaker : BaseMonoBehaviour
+namespace PushForward
 {
+	public class NoteTaker : MonoBehaviour
+	{
 #pragma warning disable IDE0044 // Add readonly modifier
-	[Multiline(10), Tooltip("Put notes on the object here."), SerializeField] private string notes = null;
+		[Multiline(10), Tooltip("Put notes on the object here."), SerializeField] private string notes;
 #pragma warning restore IDE0044 // Add readonly modifier
 
-	private void OnValidate()
-	{
-		this.notes = this.notes.Trim();
+		private void OnValidate()
+		{
+			this.notes = this.notes.Trim();
+		}
 	}
 }

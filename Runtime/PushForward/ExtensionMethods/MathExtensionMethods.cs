@@ -17,7 +17,7 @@ namespace PushForward.ExtensionMethods
 
 	public static class MathExtensionMethods
 	{
-		public const float EPSILON = 0.000008f;
+		public const float Epsilon = 0.000008f;
 
 		#region max
 		/// <summary>Maximum function for TimeSpan.</summary>
@@ -41,7 +41,7 @@ namespace PushForward.ExtensionMethods
 		/// <param name="high">The high limit.</param>
 		/// <param name="inclusive">Whether to include limits or not.</param>
 		/// <returns>True if the number is between the values, false otherwise.</returns>
-		public static bool Between<T>(this long number, long low, long high, bool inclusive = true)
+		public static bool Between(this long number, long low, long high, bool inclusive = true)
 		{
 			return inclusive ? number >= low && number <= high : number > low && number < high;
 		}
@@ -63,7 +63,17 @@ namespace PushForward.ExtensionMethods
 						? vector.x >= low.x && vector.x <= high.x && vector.y >= low.y && vector.y <= high.y
 							: vector.x > low.x && vector.x < high.x && vector.y > low.y && vector.y < high.y;
 		}
-		#endregion
+		#endregion // between
+
+		#region within
+		/// <summary>Check if a tested number is within a certain distance of this number.</summary>
+		/// <param name="tested">Which number to test.</param>
+		/// <param name="distance">The distance to check within.</param>
+		/// <param name="target">The target to check around.</param>
+		/// <returns>True if <see cref="tested"/> is within <see cref="distance"/> of <see cref="target"/></returns>
+		public static bool Within(this float tested, float distance, float target)
+		{ return tested.Between(target - distance, target + distance); }
+		#endregion // within
 
 		#region round
 		/// <summary>Rounds the double to the nearest integer.</summary>
@@ -189,7 +199,7 @@ namespace PushForward.ExtensionMethods
 		/// <remarks>The comparison is Epsilon based. The check is whether the difference between the two numbers is below a certain threshold called Epsilon (accessible in this class)</remarks>
 		/// <returns>True if they are sufficiently close, false otherwise</returns>
 		public static bool FloatEqual(this float value, float other)
-		{ return (value - other).Abs() < MathExtensionMethods.EPSILON; }
+		{ return (value - other).Abs() < MathExtensionMethods.Epsilon; }
 		#endregion
 
 		#region sign
@@ -259,5 +269,19 @@ namespace PushForward.ExtensionMethods
 			return value;
 		}
 		#endregion // circle add
+
+		#region transforms
+		public static (float, float, float) Breakdown(this Vector3 vec) => (vec.x, vec.y, vec.z);
+		public static (float, float, float, float) Breakdown(this Quaternion quaternion)
+			=> (quaternion.w, quaternion.x, quaternion.y, quaternion.z);
+
+		public static float DistanceTo(this Vector3 from, Vector3 to) => Vector3.Distance(from, to);
+		public static Quaternion RotationTo(this Quaternion from, Quaternion to)
+		{
+			Quaternion rotation = Quaternion.identity;
+			rotation.SetFromToRotation(from.eulerAngles, to.eulerAngles);
+			return rotation;
+		}
+		#endregion
 	}
 }

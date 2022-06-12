@@ -1,3 +1,11 @@
+/*
+	GameEventFloatListener
+
+	Description: The receiver for GameEventFloat
+
+	Created by: Eran "Sabre Runner" Arbel.
+	Last Updated: 2020-02-11
+*/
 
 namespace PushForward.EventSystem
 {

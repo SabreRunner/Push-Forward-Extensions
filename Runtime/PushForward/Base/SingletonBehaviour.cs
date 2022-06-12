@@ -1,11 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+/*
+ * Singleton Behaviour
+ *
+ * Description: Facilitates singleton behavior for an inherited commponent.
+ *
+ * Created by: Eran "Sabre Runner" Arbel.
+ *
+ * Last Updated: 
+*/
 using UnityEngine;
 
 /// <summary>Singleton per component.</summary>
 /// <remarks>Inheritor needs to call for SetInstance with specific instead of generic.</remarks>
 /// <typeparam name="T">The type of component you want to Singleton</typeparam>
-public class SingletonBehaviour<T> : BaseMonoBehaviour where T : Component
+// ReSharper disable once CheckNamespace
+public class SingletonBehaviour<T> : MonoBehaviour where T : Component
 {
 	/// <summary>Return the component instance.</summary>
 	public static T Instance { get; private set; }

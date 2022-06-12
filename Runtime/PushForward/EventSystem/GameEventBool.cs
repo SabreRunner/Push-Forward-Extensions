@@ -5,7 +5,7 @@ namespace PushForward.EventSystem
 
     /// <summary>An extension of the game event that contains a boolean.</summary>
     [CreateAssetMenu(menuName = "ScriptableObjects/Game Event Bool", order = 22)]
-    public class GameEventBool : GameEvent
+    class GameEventBool : GameEvent
     {
         public bool condition;
 

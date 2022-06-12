@@ -1,4 +1,13 @@
-﻿namespace PushForward.EventSystem
+﻿/*
+	GameEventString
+
+	Description: The game event for sending strings.
+
+	Created by: Eran "Sabre Runner" Arbel.
+	Last Updated: 2020-02-11
+*/
+
+namespace PushForward.EventSystem
 {
     using UnityEngine;
 

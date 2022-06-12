@@ -2,9 +2,8 @@
 namespace PushForward.Base
 {
 	using UnityEngine;
-	using UnityEngine.EventSystems;
 
-	public class MouseInputModule : BaseMonoBehaviour//, IBeginDragHandler, IEndDragHandler
+	public class MouseInputModule : MonoBehaviour//, IBeginDragHandler, IEndDragHandler
 	{
 		#region fields
 		[Range(10f, 1000f)] [SerializeField] private float swipeThreshold;
@@ -45,6 +44,7 @@ namespace PushForward.Base
 		}
 		*/
 
+		// ReSharper disable once UnusedMember.Local
 		private void CheckForTouchInput()
 		{
 			if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
