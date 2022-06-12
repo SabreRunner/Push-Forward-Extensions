@@ -15,4 +15,4 @@ Consult [install packages from git](https://docs.unity3d.com/Manual/upm-ui-gitur
 
 There are several ways to use this package
 
-* Use TransformExtender, AnimatorExtender, VideoExtender, etc. on any object with a Transform, Animator, or VideoPlayer component to expose additional methods from the component.
+* Android Manager: For taking care of Native Android access as well as toasts.
