@@ -1,10 +1,10 @@
 
 namespace PushForward.Examples
 {
-    using PushForward;
+    using UnityEngine;
 
     /// <summary>An example component used to send the given string value as an Android Toast.</summary>
-    public class ToastCache : BaseMonoBehaviour
+    public class ToastCache : MonoBehaviour
     {
         /// <summary>The string to send as Toast.</summary>
         public string StringValue { get; set; }

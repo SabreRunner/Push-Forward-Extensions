@@ -1,9 +1,11 @@
 /*
-	EnumerableExtensionMethos
-	
-	Description: A collection of useful methods for C# System collection classes to enhance functionality.
-	Created by: Eran "Sabre Runner" Arbel.
-	Last Updated: 2018-07-23
+ * EnumerableExtensionMethods
+ *
+ * Description: A collection of useful methods for C# System collection classes to enhance functionality.
+ *
+ * Created by: Eran "Sabre Runner" Arbel.
+ *
+ * Last Updated: 2022-06-12
 */
 
 #region using
@@ -12,7 +14,6 @@ using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-
 #endregion
 
 /// <summary>Helper methods for generic collections</summary>
@@ -46,10 +47,10 @@ public static class EnumerableExtensionMethods
 	public static T[] DoForEach<T>(this T[] array, Action<T, int> action)
 	{
 		if (action == null)
-		{ throw new ArgumentException("Action can't be null", "action"); }
+		{ throw new ArgumentException("Action can't be null", nameof(action)); }
 
 		if (array == null)
-		{ throw new ArgumentException("Array can't be null", "array"); }
+		{ throw new ArgumentException("Array can't be null", nameof(array)); }
 
 		for (int index = 0; index < array.Length; index++)
 		{ action(array[index], index); }
@@ -64,10 +65,10 @@ public static class EnumerableExtensionMethods
 	public static List<T> DoForEach<T>(this List<T> list, Action<T, int> action)
 	{
 		if (action == null)
-		{ throw new ArgumentException("Action can't be null", "action"); }
+		{ throw new ArgumentException("Action can't be null", nameof(action)); }
 
 		if (list == null)
-		{ throw new ArgumentException("List can't be null", "list"); }
+		{ throw new ArgumentException("List can't be null", nameof(list)); }
 
 		for (int index = 0; index < list.Count; index++)
 		{ action(list[index], index); }
@@ -109,10 +110,7 @@ public static class EnumerableExtensionMethods
 	/// <typeparam name="T">The array element type.</typeparam>
 	/// <param name="array">The array in question</param>
 	/// <returns>The last element of the array.</returns>
-	public static T Last<T>(this T[] array)
-	{
-		return array[array.Length - 1];
-	}
+	public static T Last<T>(this T[] array) => array[^1];
 
 	/// <summary>Clones an existing dictionary, producing a new copy of it.</summary>
 	/// <typeparam name="T1">First Type.</typeparam>
@@ -129,11 +127,27 @@ public static class EnumerableExtensionMethods
 	/// <typeparam name="T">The type of items in this list.</typeparam>
 	/// <param name="list">The list to add to.</param>
 	/// <param name="newItem">The new item to add</param>
+	/// <param name="distinct">Whether to make sure the item added is unique in the list.</param>
 	/// <returns>The original list with the new item.</returns>
-	public static List<T> ChainAdd<T>(this List<T> list, T newItem)
+	public static List<T> ChainAdd<T>(this List<T> list, T newItem, bool distinct = false)
 	{
+		if (distinct && list.Contains(newItem))
+		{ return list; }
+
 		list.Add(newItem);
 		return list;
+	}
+
+	/// <summary>Adds an item to the list and makes sure it's distinct.</summary>
+	/// <param name="list">The list to check.</param>
+	/// <param name="newItem">The new item to add.</param>
+	/// <returns>False if the list already contains the item, true otherwise.</returns>
+	public static bool AddDistinct<T>(this List<T> list, T newItem)
+	{
+		if (list.Contains(newItem))
+		{ return false; }
+		list.Add(newItem);
+		return true;
 	}
 
 	/// <summary>A more convenient string representation for enumerables.</summary>
@@ -144,11 +158,13 @@ public static class EnumerableExtensionMethods
 	{
 		if (enumerable == null)
 		{ return "NULL"; }
+		// ReSharper disable once PossibleMultipleEnumeration -- irrelevant as it's only checking for empty
 		if (!enumerable.Any())
 		{ return "[]"; }
 
 		StringBuilder stringRepresentationBuilder = new StringBuilder("[ ");
 
+		// ReSharper disable once PossibleMultipleEnumeration -- also order doesn't really matter.
 		foreach (T item in enumerable)
 		{ stringRepresentationBuilder.Append(item).Append(", "); }
 
@@ -173,8 +189,8 @@ public static class EnumerableExtensionMethods
 		return $"({vec2.x.ToString(n)}, {vec2.y.ToString(n)})";
 	}
 
-	public static string StringRepresentation(this Quaternion quat, int decimalAccuracy = 4)
+	public static string StringRepresentation(this Quaternion quaternion, int decimalAccuracy = 4)
 	{
-		return quat.eulerAngles.StringRepresentation(decimalAccuracy);
+		return quaternion.eulerAngles.StringRepresentation(decimalAccuracy);
 	}
 }
