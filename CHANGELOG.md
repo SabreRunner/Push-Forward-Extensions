@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.5.1
+* Fixed ToastCache not recognising AndroidManager. 
+
 ## 0.5.0
 * Lots of changes and additions. Too many to count.
 * More documentation.
