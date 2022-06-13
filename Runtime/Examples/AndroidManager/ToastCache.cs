@@ -1,6 +1,8 @@
 
+#if UNITY_ANDROID
 namespace PushForward.Examples
 {
+    using Base;
     using UnityEngine;
 
     /// <summary>An example component used to send the given string value as an Android Toast.</summary>
@@ -12,9 +14,8 @@ namespace PushForward.Examples
         /// <summary>An editor exposed method that sends the set string value as an Android Toast.</summary>
         public void SendToast()
         {
-            #if UNITY_ANDROID
             AndroidManager.ShowToast(this.StringValue);
-            #endif
         }
     }
 }
+#endif
