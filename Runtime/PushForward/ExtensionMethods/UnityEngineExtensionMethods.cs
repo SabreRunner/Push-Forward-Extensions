@@ -312,6 +312,10 @@ namespace UnityEngine
 		public static void Log(this MonoBehaviour mb, string logMessage,
 							   [System.Runtime.CompilerServices.CallerMemberName] string methodName = default)
 		{ Debug.Log(string.Format("{0}.{1}.{2}: {3}", mb.ObjectPath(), mb.GetType().Name, methodName, logMessage)); }
+		public static void Log(this ScriptableObject scriptableObject, string debugMessage,
+							   [System.Runtime.CompilerServices.CallerMemberName] string methodName = default)
+		{ Debug.Log(string.Format("{0}.{1}: {2}", scriptableObject.GetType().Name, methodName, debugMessage)); }
+		
 		/// <summary>A debug log with a timed segment letting you know the time passed since the last call of the same tag.</summary>
 		/// <param name="mb">The monobehaviour from where this was called.</param>
 		/// <param name="timeTag">The tag to use to group calls.</param>
@@ -349,6 +353,10 @@ namespace UnityEngine
 								[System.Runtime.CompilerServices.CallerMemberName] string methodName = default)
 		{ Debug.Log(string.Format("<color=green>{0}.{1}.{2}: {3}</color>",
 								  mb.ObjectPath(), mb.GetType().Name, methodName, debugMessage)); }
+		public static void Temp(this ScriptableObject scriptableObject, string debugMessage,
+								[System.Runtime.CompilerServices.CallerMemberName] string methodName = default)
+		{ Debug.Log(string.Format("<color=green>{0}.{1}: {2}</color>",
+								  scriptableObject.GetType().Name, methodName, debugMessage)); }
 
 		/// <summary>Warning log is marked with a yellow warning symbol.</summary>
 		/// <param name="methodName">The name of the method in which this is used.</param>
@@ -357,6 +365,9 @@ namespace UnityEngine
 		public static void Warn(this MonoBehaviour mb, string warningMessage,
 								[System.Runtime.CompilerServices.CallerMemberName] string methodName = default)
 		{ Debug.LogWarning(string.Format("{0}.{1}.{2}: {3}", mb.ObjectPath(), mb.GetType().Name, methodName, warningMessage)); }
+		public static void Warn(this ScriptableObject scriptableObject, string debugMessage,
+								[System.Runtime.CompilerServices.CallerMemberName] string methodName = default)
+		{ Debug.Warn(string.Format("{0}.{1}: {2}", scriptableObject.GetType().Name, methodName, debugMessage)); }
 
 		/// <summary>Error log is marked with a red error symbol.</summary>
 		/// <param name="methodName">The name of the method in which this is used.</param>
@@ -365,6 +376,9 @@ namespace UnityEngine
 		public static void Error(this MonoBehaviour mb, string errorMessage,
 								 [System.Runtime.CompilerServices.CallerMemberName] string methodName = default)
 		{ Debug.LogError(string.Format("{0}.{1}.{2}: {3}", mb.ObjectPath(), mb.GetType().Name, methodName, errorMessage)); }
+		public static void Error(this ScriptableObject scriptableObject, string debugMessage,
+								[System.Runtime.CompilerServices.CallerMemberName] string methodName = default)
+		{ Debug.Error(string.Format("{0}.{1}: {2}", scriptableObject.GetType().Name, methodName, debugMessage)); }
 		#endregion
 		#endregion // MonoBehaviour
 

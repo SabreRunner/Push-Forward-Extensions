@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.5.2
+* Added basic logging functions to ScriptableObject.
+
 ## 0.5.1
 * Fixed ToastCache not recognising AndroidManager. 
 
