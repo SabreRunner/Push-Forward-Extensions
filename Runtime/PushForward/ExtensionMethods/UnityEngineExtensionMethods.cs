@@ -367,7 +367,7 @@ namespace UnityEngine
 		{ Debug.LogWarning(string.Format("{0}.{1}.{2}: {3}", mb.ObjectPath(), mb.GetType().Name, methodName, warningMessage)); }
 		public static void Warn(this ScriptableObject scriptableObject, string debugMessage,
 								[System.Runtime.CompilerServices.CallerMemberName] string methodName = default)
-		{ Debug.Warn(string.Format("{0}.{1}: {2}", scriptableObject.GetType().Name, methodName, debugMessage)); }
+		{ Debug.LogWarning(string.Format("{0}.{1}: {2}", scriptableObject.GetType().Name, methodName, debugMessage)); }
 
 		/// <summary>Error log is marked with a red error symbol.</summary>
 		/// <param name="methodName">The name of the method in which this is used.</param>
@@ -378,7 +378,7 @@ namespace UnityEngine
 		{ Debug.LogError(string.Format("{0}.{1}.{2}: {3}", mb.ObjectPath(), mb.GetType().Name, methodName, errorMessage)); }
 		public static void Error(this ScriptableObject scriptableObject, string debugMessage,
 								[System.Runtime.CompilerServices.CallerMemberName] string methodName = default)
-		{ Debug.Error(string.Format("{0}.{1}: {2}", scriptableObject.GetType().Name, methodName, debugMessage)); }
+		{ Debug.LogError(string.Format("{0}.{1}: {2}", scriptableObject.GetType().Name, methodName, debugMessage)); }
 		#endregion
 		#endregion // MonoBehaviour
 
