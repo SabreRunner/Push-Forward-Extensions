@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.5.3
+* Changed TransformLerper to LerpSystem.
+
 ## 0.5.2
 * Added basic logging functions to ScriptableObject.
 

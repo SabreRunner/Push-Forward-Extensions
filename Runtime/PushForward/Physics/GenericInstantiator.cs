@@ -11,17 +11,19 @@ using UnityEngine;
 
 namespace PushForward.Physics
 {
+	using System;
+
 	public class GenericInstantiator : MonoBehaviour
 	{
-		// ReSharper disable once MemberCanBePrivate.Global
-		public enum Lineage { Child, Sibling, Parent, Root }
+		// ReSharper disable once MemberCanBePrivate.Global -- used in inspector
+		public enum LineageEnum { Child, Sibling, Parent, Root }
 
 		#region inspector fields
 		#pragma warning disable IDE0044 // Add readonly modifier
 		[Tooltip("The Prefab to instantiate.")]
 		[SerializeField] private GameObject prefab;
 		[Tooltip("Where in the hierarchy to put the new object?")]
-		[SerializeField] private Lineage lineage;
+		[SerializeField] private LineageEnum lineage;
 		[Tooltip("What is the position offset to add?")]
 		[SerializeField] private Vector3 positionOffset = Vector3.zero;
 		[Tooltip("What is the rotation offset to add?")]
@@ -43,23 +45,28 @@ namespace PushForward.Physics
 			{ return null; }
 
 			// instantiate according to lineage
-			GameObject newObject = Instantiate(this.prefab,
-											   this.lineage == Lineage.Child ? this.transform
-												: this.lineage == Lineage.Sibling
-												  // ReSharper disable once Unity.InefficientPropertyAccess
-												  || this.lineage == Lineage.Parent ? this.transform.parent : null);
+			var thisTransform = this.transform;
+			var thisParent = thisTransform.parent;
+			Transform parent = this.lineage switch
+								{
+									LineageEnum.Child => thisTransform,
+									LineageEnum.Sibling => thisParent,
+									LineageEnum.Parent => thisParent,
+									LineageEnum.Root => null,
+									_ => throw new ArgumentOutOfRangeException()
+								};
+
+			GameObject newObject = Instantiate(this.prefab, parent);
 
 			// add required offsets
 			newObject.transform.localPosition += this.positionOffset
 													+ (newObject.transform.parent == null ? this.transform.position : Vector3.zero);
 			newObject.transform.localRotation *= Quaternion.Euler(this.rotationOffset)
 													* (newObject.transform.parent == null ? this.transform.rotation : Quaternion.identity);
-			return newObject;
-		}
+			if (this.lineage == LineageEnum.Parent)
+			{ thisTransform.SetParent(newObject.transform, true); }
 
-		public void InstantiateStatic()
-		{
-			this.Instantiate();
+			return newObject;
 		}
 
 		public GameObject InstantiateOtherDontReplace(GameObject otherPrefab)
@@ -71,9 +78,10 @@ namespace PushForward.Physics
 			return instantiated;
 		}
 
-		public void InstantiateOtherDontReplaceStatic(GameObject otherPrefab)
-		{
-			this.InstantiateOtherDontReplace(otherPrefab);
-		}
+		public T Instantiate<T>() where T : Component
+			=> this.Instantiate().GetComponent<T>();
+
+		public T InstantiateOtherDontReplace<T>(GameObject otherPrefab) where T : Component
+			=> this.InstantiateOtherDontReplace(otherPrefab).GetComponent<T>();
 	}
 }

@@ -507,6 +507,7 @@ namespace UnityEngine
 			}
 			else
 			{
+				#if UNITY_EDITOR
 				List<Transform> removeThese = new List<Transform>();
 				// if we have more key code objects
 				for (int childIndex = 0; childIndex < transform.transform.childCount; childIndex++)
@@ -515,7 +516,6 @@ namespace UnityEngine
 					Transform unnecessaryTransform = transform.transform.GetChild(childIndex);
 					removeThese.Add(unnecessaryTransform);
 				}
-				#if UNITY_EDITOR
 				// destroy unnecessary objects
 				removeThese.DoForEach(tform => { UnityEditor.EditorApplication.delayCall += () => Object.DestroyImmediate(tform.gameObject); });
 				#endif
