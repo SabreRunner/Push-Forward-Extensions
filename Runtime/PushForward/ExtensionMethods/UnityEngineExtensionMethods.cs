@@ -27,45 +27,27 @@ namespace UnityEngine
     {
         #region Object and Components
 		#region Activation
-		public static bool IsActive(this Component component) => component.gameObject.activeSelf;
+		public static bool IsActive(this Component component)
+			=> component != null && component.gameObject != null ? component.gameObject.activeSelf : false;
 		/// <summary>Activates the game object</summary>
         /// <remarks>Checks for null</remarks>
-        public static void Activate(this GameObject obj)
-        {
-            if (obj != null)
-            { obj.SetActive(true); }
-        }
-        /// <summary>Deactivates the game object</summary>
+        public static void Activate(this GameObject obj) => obj?.SetActive(true);
+		/// <summary>Deactivates the game object</summary>
         /// <remarks>Checks for null</remarks>
-        public static void Deactivate(this GameObject obj)
-        {
-            if (obj != null)
-            { obj.SetActive(false); }
-        }
-        /// <summary>Sets the active state of the underlying game object</summary>
+        public static void Deactivate(this GameObject obj) => obj?.SetActive(false);
+
+		/// <summary>Sets the active state of the underlying game object</summary>
         /// <remarks>Checks for null</remarks>
-        public static void SetActive(this Component component, bool state)
-        {
-            if (component != null)
-            { component.gameObject.SetActive(state); }
-        }
-        /// <summary>Activates the component's underlying game object</summary>
+        public static void SetActive(this Component component, bool state) => component?.gameObject?.SetActive(state);
+
+		/// <summary>Activates the component's underlying game object</summary>
         /// <remarks>Checks for null</remarks>
-        public static void Activate(this Component component)
-        {
-            if (component != null)
-            { component.SetActive(true); }
-        }
-        /// <summary>Deactivates the component's underlying game object</summary>
+        public static void Activate(this Component component) => component?.SetActive(true);
+		/// <summary>Deactivates the component's underlying game object</summary>
         /// <remarks>Checks for null</remarks>
-        public static void Deactivate(this Component component)
-        {
-            if (component != null)
-            { component.SetActive(false); }
-        }
-		public static void ToggleActive(this GameObject go) => go.SetActive(!go.activeSelf);
-		public static void ToggleActive(this Component component)
-		{ component.gameObject.ToggleActive(); }
+        public static void Deactivate(this Component component) => component?.SetActive(false);
+		public static void ToggleActive(this GameObject go) => go?.SetActive(!go.activeSelf);
+		public static void ToggleActive(this Component component) => component?.gameObject?.ToggleActive();
 		#endregion // activation
 		#region Components
         /// <summary>Adds the given component type to the underlying GameObject.</summary>

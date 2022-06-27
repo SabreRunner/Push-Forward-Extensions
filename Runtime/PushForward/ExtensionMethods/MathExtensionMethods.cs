@@ -1,11 +1,11 @@
 /*
  * MathExtensionMethods
  *
- * Description: A collection of useful methods for primitive classes to enhance functionality.
+ * Description: A collection of useful methods for math classes to enhance functionality.
  *
  * Created by: Eran "Sabre Runner" Arbel.
  *
- * Last Updated: 2018-11-15
+ * Last Updated: 2022-06-27
 */
 
 namespace PushForward.ExtensionMethods
@@ -17,8 +17,6 @@ namespace PushForward.ExtensionMethods
 
 	public static class MathExtensionMethods
 	{
-		public const float Epsilon = 0.000008f;
-
 		#region max
 		/// <summary>Maximum function for TimeSpan.</summary>
 		/// <param name="timeSpan">First TimeSpan</param>
@@ -79,26 +77,17 @@ namespace PushForward.ExtensionMethods
 		/// <summary>Rounds the double to the nearest integer.</summary>
 		/// <param name="number">The number to round.</param>
 		/// <returns>The rounded number.</returns>
-		public static int RoundToInt(this double number)
-		{
-			return (int)Math.Round(number, MidpointRounding.ToEven);
-		}
+		public static int RoundToInt(this double number) => (int)Math.Round(number, MidpointRounding.ToEven);
 
 		/// <summary>Rounds the float to the nearest integer.</summary>
 		/// <param name="number">The number to round.</param>
 		/// <returns>The rounded number.</returns>
-		public static int RoundToInt(this float number)
-		{
-			return Mathf.RoundToInt(number);
-		}
+		public static int RoundToInt(this float number) => Mathf.RoundToInt(number);
 
 		/// <summary>Floors the float to the nearest integer.</summary>
 		/// <param name="number">The number to floor.</param>
 		/// <returns>The floored number.</returns>
-		public static int Floor(this float number)
-		{
-			return Mathf.FloorToInt(number);
-		}
+		public static int Floor(this float number) => Mathf.FloorToInt(number);
 		#endregion
 
 		#region clamp
@@ -107,10 +96,7 @@ namespace PushForward.ExtensionMethods
 		/// <param name="min">Minimum value.</param>
 		/// <param name="max">Maximum value</param>
 		/// <returns>The clamped number.</returns>
-		public static int Clamp(this int value, int min, int max)
-		{
-			return Mathf.Clamp(value, min, max);
-		}
+		public static int Clamp(this int value, int min, int max) => Mathf.Clamp(value, min, max);
 
 		/// <summary>Clamp an long to min and max.</summary>
 		/// <param name="value">The number to clamp.</param>
@@ -132,10 +118,7 @@ namespace PushForward.ExtensionMethods
 		/// <param name="min">Minimum value.</param>
 		/// <param name="max">Maximum value</param>
 		/// <returns>The clamped number.</returns>
-		public static float Clamp(this float value, float min, float max)
-		{
-			return Mathf.Clamp(value, min, max);
-		}
+		public static float Clamp(this float value, float min, float max) => Mathf.Clamp(value, min, max);
 
 		/// <summary>Clamp a double to min and max.</summary>
 		/// <param name="value">The number to clamp.</param>
@@ -154,16 +137,12 @@ namespace PushForward.ExtensionMethods
 		/// <summary>Clamp a float to 0 and 1.</summary>
 		/// <param name="value">The number to clamp.</param>
 		/// <returns>The clamped number.</returns>
-		public static float Clamp01(this float value)
-		{
-			return Mathf.Clamp01(value);
-		}
+		public static float Clamp01(this float value) => Mathf.Clamp01(value);
 
 		/// <summary>Clamp a double to 0 and 1.</summary>
 		/// <param name="value">The number to clamp.</param>
 		/// <returns>The clamped number.</returns>
-		public static double Clamp01(this double value)
-		{ return value.Clamp(0, 1); }
+		public static double Clamp01(this double value) => value.Clamp(0, 1);
 
 		/// <summary>Clamp a Vector2 to min and max</summary>
 		/// <param name="value">The Vector2 to clamp.</param>
@@ -171,9 +150,7 @@ namespace PushForward.ExtensionMethods
 		/// <param name="max">Maximum value</param>
 		/// <returns>The clamped Vector2.</returns>
 		public static Vector2 Clamp(this Vector2 value, Vector2 min, Vector2 max)
-		{
-			return new Vector2(value.x.Clamp(min.x, max.x), value.y.Clamp(min.y, max.y));
-		}
+			=> new(value.x.Clamp(min.x, max.x), value.y.Clamp(min.y, max.y));
 
 		/// <summary>Clamp a Vector3 to min and max</summary>
 		/// <param name="value">The Vector3 to clamp.</param>
@@ -181,25 +158,21 @@ namespace PushForward.ExtensionMethods
 		/// <param name="max">Maximum value</param>
 		/// <returns>The clamped Vector3.</returns>
 		public static Vector3 Clamp(this Vector3 value, Vector3 min, Vector3 max)
-		{
-			return new Vector3(value.x.Clamp(min.x, max.x), value.y.Clamp(min.y, max.y), value.z.Clamp(min.z, max.z));
-		}
+			=> new(value.x.Clamp(min.x, max.x), value.y.Clamp(min.y, max.y), value.z.Clamp(min.z, max.z));
 		#endregion
 
 		#region abs
 		/// <summary>Returns the absolute value of given value.</summary>
 		/// <param name="value">The value to make absolute.</param>
-		public static int Abs(this int value)
-		{ return Mathf.Abs(value); }
+		public static int Abs(this int value) => Mathf.Abs(value);
 		/// <summary>Returns the absolute value of given value.</summary>
 		/// <param name="value">The value to make absolute.</param>
-		public static float Abs(this float value)
-		{ return Mathf.Abs(value); }
+		public static float Abs(this float value) => Mathf.Abs(value);
 		/// <summary>Compares two floats.</summary>
 		/// <remarks>The comparison is Epsilon based. The check is whether the difference between the two numbers is below a certain threshold called Epsilon (accessible in this class)</remarks>
 		/// <returns>True if they are sufficiently close, false otherwise</returns>
 		public static bool FloatEqual(this float value, float other)
-		{ return (value - other).Abs() < MathExtensionMethods.Epsilon; }
+		{ return (value - other).Abs() < float.Epsilon; }
 		#endregion
 
 		#region sign
@@ -207,10 +180,7 @@ namespace PushForward.ExtensionMethods
 		/// <param name="value">The float to check.</param>
 		/// <returns>false, if the value is negative and true the value is positive</returns>
 		/// <remarks>float cannot be definitively pinned down as equal to exactly 0f.</remarks>
-		public static bool Positive(this float value)
-		{
-			return Mathf.Sign(value) > 0f;
-		}
+		public static bool Positive(this float value) => Mathf.Sign(value) > 0f;
 		#endregion // sign
 
 		#region circle add
@@ -259,7 +229,7 @@ namespace PushForward.ExtensionMethods
 
 			// start by subtracting
 			value -= subtraction;
-			
+
 			if (value < minimum)
 			{
 				int remainder = value - (minimum - 1);
@@ -271,7 +241,7 @@ namespace PushForward.ExtensionMethods
 		#endregion // circle add
 
 		#region transforms
-		public static Vector4 ToVector4(this Quaternion quaternion) => new Vector4(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+		public static Vector4 ToVector4(this Quaternion quaternion) => new(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
 		public static (float, float, float) Breakdown(this Vector3 vec) => (vec.x, vec.y, vec.z);
 		public static (float, float, float, float) Breakdown(this Quaternion quaternion)
 			=> (quaternion.w, quaternion.x, quaternion.y, quaternion.z);
