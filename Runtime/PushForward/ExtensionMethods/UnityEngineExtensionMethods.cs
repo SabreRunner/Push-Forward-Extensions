@@ -86,22 +86,25 @@ namespace UnityEngine
 		public static void DestroyAllComponents(this Component component) => component.gameObject.DestroyAllComponents();
 		#endregion // destruction
 
-		/// <summary>Gets the prefab's path if it is in the resources folder.</summary>
-		/// <remarks>ASSERT: You are using a prefab!
-		///		ASSERT: That prefab is in the Resources folder.
-		///		ASSERT: You are running this from Editor and not at runtime.
-		///		If any of these are false, behaviour is unknown.
-		///		If the last one is false, it just won't work.</remarks>
-		/// <param name="prefab">The prefab in question.</param>
-		/// <returns>The path to it INSIDE resources (excluding that folder)</returns>
-		public static string GetPrefabPathInResources(this GameObject prefab)
+		public static bool ReferenceEqual(this object obj1, object obj2) => ReferenceEquals(obj1, obj2);
+
+		///  <summary>Gets the prefab's path if it is in the resources folder.</summary>
+		///  <remarks>ASSERT: You are using a prefab!
+		/// 		ASSERT: That prefab is in the Resources folder.
+		/// 		ASSERT: You are running this from Editor and not at runtime.
+		/// 		If any of these are false, behaviour is unknown.
+		/// 		If the last one is false, it just won't work.</remarks>
+		///  <param name="prefab">The prefab in question.</param>
+		///  <param name="suffix">Resource paths shouldn't have extensions so let's get rid of it.</param>
+		///  <returns>The path to it INSIDE resources (excluding that folder)</returns>
+		public static string GetPrefabPathInResources(this GameObject prefab, string suffix)
 		{
 			if (prefab == null)
 			{ return null; }
 			
 			#if UNITY_EDITOR
 			if (AssetDatabase.TryGetGUIDAndLocalFileIdentifier(prefab, out string guid, out long file))
-			{ return AssetDatabase.GUIDToAssetPath(guid).Replace("Assets/Resources/", string.Empty); }
+			{ return AssetDatabase.GUIDToAssetPath(guid).Replace("Assets/Resources/", string.Empty).Replace(suffix, string.Empty); }
 			#endif
 			
 			return null;
@@ -410,7 +413,6 @@ namespace UnityEngine
 		/// <param name="obj">The object to start searching from, it will be the first in the path.</param>
 		/// <param name="path">The path to an object to search for ('\\' delimited)</param>
 		/// <returns>The object found or null if none was found (the path will be modified to contain only the objects found)</returns>
-
 		public static GameObject FindChildByPath(this GameObject obj, ref string path)
 		{
 			// get all the possible names
@@ -461,7 +463,6 @@ namespace UnityEngine
 		/// <summary>Gets all components of type T in the object's children and not in the object itself</summary>
 		/// <typeparam name="T">The type of Component to get.</typeparam>
 		/// <returns>An array of Components of type T. Order is not guaranteed.</returns>
-
 		public static T[] GetComponentsOnlyInChildren<T>(this GameObject gameObject) where T : Component
 		{
 			List<T> list = new List<T>();
@@ -479,13 +480,21 @@ namespace UnityEngine
 
 		public static void DestroyAllChildren(this Transform transform)
 		{
+			Debug.Log("Destrying children of " + transform.name + " transform.");
 			if (Application.isPlaying)
 			{
-				while (transform.transform.childCount > 0)
-				{
-					Transform child = transform.transform.GetChild(0);
-					Object.DestroyImmediate(child.gameObject);
-				}
+				// get the children in a list
+				List<GameObject> childList = new List<GameObject>();
+				for (int childIndex = 0; childIndex < transform.childCount; childIndex++)
+				{ childList.Add(transform.GetChild(childIndex).gameObject); }
+				// unparent everything
+				transform.DetachChildren();
+				// destroy objects
+				childList.ForEach(go =>
+								  {
+									  Debug.Log("Removing child " + go.name);
+									  Object.Destroy(go);
+								  });
 			}
 			else
 			{
@@ -494,12 +503,14 @@ namespace UnityEngine
 				// if we have more key code objects
 				for (int childIndex = 0; childIndex < transform.transform.childCount; childIndex++)
 				{
+					Debug.Log("Child " + childIndex);
 					// save them for removal
 					Transform unnecessaryTransform = transform.transform.GetChild(childIndex);
+					unnecessaryTransform.SetParent(null);
 					removeThese.Add(unnecessaryTransform);
 				}
 				// destroy unnecessary objects
-				removeThese.DoForEach(tform => { UnityEditor.EditorApplication.delayCall += () => Object.DestroyImmediate(tform.gameObject); });
+				removeThese.DoForEach(tform => { UnityEditor.EditorApplication.delayCall += () => Object.Destroy(tform.gameObject); });
 				#endif
 			}
 		}
