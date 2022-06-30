@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.5.4
+* Rebuilt DestroyAllChildren to extract, detach, and then destroy safely.
+
 ## 0.5.3
 * Changed TransformLerper to LerpSystem.
 
