@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.5.5
+* Made Temp Log Editor Only so building with temp logs will fail.
+
 ## 0.5.4
 * Rebuilt DestroyAllChildren to extract, detach, and then destroy safely.
 
