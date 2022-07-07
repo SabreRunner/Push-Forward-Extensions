@@ -53,7 +53,7 @@ namespace PushForward.Base
 			if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
 			{
 				Vector2 drag = Input.GetTouch(0).position - (Vector2)this.mouseDragStartPosition;
-				this.Temp("CheckForTouchInput", "Drag: " + drag.magnitude + "Touch Delta: " + Input.GetTouch(0).deltaPosition.magnitude);
+				// this.Temp("CheckForTouchInput", "Drag: " + drag.magnitude + "Touch Delta: " + Input.GetTouch(0).deltaPosition.magnitude);
 
 				if (drag.magnitude > this.swipeThreshold)
 				{ this.swipeEvent.Invoke(drag); }
@@ -69,7 +69,7 @@ namespace PushForward.Base
 			{
 				Vector2 drag = Input.mousePosition - this.mouseDragStartPosition;
 
-				this.Temp("CheckForMouseInput", "Drag: " + drag.magnitude);
+				// this.Temp("CheckForMouseInput", "Drag: " + drag.magnitude);
 
 				if (drag.magnitude > this.swipeThreshold)
 				{ this.swipeEvent.Invoke(drag); }

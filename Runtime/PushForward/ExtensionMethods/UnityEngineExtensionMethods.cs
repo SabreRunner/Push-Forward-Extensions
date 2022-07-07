@@ -157,7 +157,7 @@ namespace UnityEngine
 			if (actionToCall == null || predicate == null)
 			{ yield break; }
 
-			do { yield return frameWait; }
+			do { yield return null; }
 			// ReSharper disable once LoopVariableIsNeverChangedInsideLoop - changed outside in the caller
 			while (!predicate());
 
@@ -180,7 +180,7 @@ namespace UnityEngine
 			while (secondsCounter < amountOfSecondsToTake)
 			{
 				actionToCall(secondsCounter);
-				yield return new WaitForEndOfFrame();
+				yield return null;
 				secondsCounter += Time.deltaTime;
 			}
 			actionToCall(amountOfSecondsToTake);
@@ -218,7 +218,7 @@ namespace UnityEngine
 			{ yield break; }
 
 			for (int frameIndex = 0; frameIndex < framesToWait; frameIndex++)
-			{ yield return frameWait; }
+			{ yield return null; }
 
 			actionToStart();
 		}
@@ -245,7 +245,7 @@ namespace UnityEngine
 					actionToCall();
 				}
 				else { countFrames++; }
-				yield return frameWait;
+				yield return null;
 			}
 		}
 
@@ -330,6 +330,7 @@ namespace UnityEngine
 								 timeTag, debugMessage, EngineExtensionMethods.CurrentTimeInMilliseconds, timeSinceLastCall));
 		}
 
+		#if UNITY_EDITOR
 		/// <summary>Temp logging is like debug but in green. Used for logs during actual debugging. Dispose of after use.</summary>
 		/// <param name="methodName">The name of the method in which this is used.</param>
 		/// <param name="mb">The monobehaviour from which this was called.</param>
@@ -342,6 +343,7 @@ namespace UnityEngine
 								[System.Runtime.CompilerServices.CallerMemberName] string methodName = default)
 		{ Debug.Log(string.Format("<color=green>{0}.{1}: {2}</color>",
 								  scriptableObject.GetType().Name, methodName, debugMessage)); }
+		#endif
 
 		/// <summary>Warning log is marked with a yellow warning symbol.</summary>
 		/// <param name="methodName">The name of the method in which this is used.</param>

@@ -73,7 +73,7 @@ namespace PushForward.Base
 
 		public void MouseDragToSceneSwipe(Vector2 drag)
 		{
-			this.SwipeScenes(Vector2.Dot(drag, Vector2.right).Positive());
+			this.SwipeScenes(Vector2.Dot(drag, Vector2.right).IsPositive());
 		}
 		#endregion
 

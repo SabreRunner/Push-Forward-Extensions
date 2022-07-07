@@ -180,7 +180,7 @@ namespace PushForward.ExtensionMethods
 		/// <param name="value">The float to check.</param>
 		/// <returns>false, if the value is negative and true the value is positive</returns>
 		/// <remarks>float cannot be definitively pinned down as equal to exactly 0f.</remarks>
-		public static bool Positive(this float value) => Mathf.Sign(value) > 0f;
+		public static bool IsPositive(this float value) => Mathf.Sign(value) > 0f;
 		#endregion // sign
 
 		#region circle add
