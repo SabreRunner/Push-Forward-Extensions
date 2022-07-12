@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.5.6
+* Changed GetMainCamera to Component Extension Method.
+
 ## 0.5.5
 * Made Temp Log Editor Only so building with temp logs will fail.
 

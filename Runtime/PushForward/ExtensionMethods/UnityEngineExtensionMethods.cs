@@ -141,7 +141,7 @@ namespace UnityEngine
 		public static bool ActiveInHierarchy(this MonoBehaviour mb)
 		{ return mb.gameObject.activeInHierarchy; }
 		private static Camera mainCamera;
-		public static Camera GetMainCamera(bool forceRefresh = false)
+		public static Camera GetMainCamera(this Component comp, bool forceRefresh = false)
 		{
 			if (mainCamera == null || forceRefresh)
 			{ mainCamera = Camera.main; }
