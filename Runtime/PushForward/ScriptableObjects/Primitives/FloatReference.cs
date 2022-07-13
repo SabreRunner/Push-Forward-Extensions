@@ -11,7 +11,7 @@ namespace PushForward.ScriptableObjects.Primitives
 {
     using System;
 
-    [Serializable]
+	[Serializable]
     public class FloatReference
     {
 		public bool useOverride = true;
@@ -19,8 +19,21 @@ namespace PushForward.ScriptableObjects.Primitives
         public bool useInitial;
         public FloatVariable variable;
 
-        public float Value => this.useOverride ? this.overrideValue
-								: this.useInitial ? this.variable.initialValue : this.variable.runtimeValue;
+		public event Action<float> Updated;
+        public float Value
+		{
+			get => this.useOverride ? this.overrideValue
+						: this.useInitial ? this.variable.initialValue : this.variable.runtimeValue;
+			set
+			{
+				if (this.useOverride == false)
+				{
+					this.useInitial = false;
+					this.variable.runtimeValue = value;
+					this.Updated?.Invoke(this.variable.runtimeValue);
+				}
+			}
+		}
 
 		public FloatReference(float value)
 		{

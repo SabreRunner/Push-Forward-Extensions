@@ -4,7 +4,7 @@ namespace PushForward.ScriptableObjects.Primitives
     using System;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "ScriptableObjects/Prefab", order = 6)]
+    [CreateAssetMenu(menuName = "ScriptableObjects/Variable/Prefab", order = 6)]
     public class PrefabVariable : ScriptableObject, ISerializationCallbackReceiver
     {
         public GameObject initialValue;

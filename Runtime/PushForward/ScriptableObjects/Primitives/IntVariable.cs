@@ -12,7 +12,7 @@ namespace PushForward.ScriptableObjects.Primitives
     using System;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "ScriptableObjects/Int", order = 1)]
+    [CreateAssetMenu(menuName = "ScriptableObjects/Variable/Int", order = 1)]
     public class IntVariable : ScriptableObject, ISerializationCallbackReceiver
     {
         public int initialValue;

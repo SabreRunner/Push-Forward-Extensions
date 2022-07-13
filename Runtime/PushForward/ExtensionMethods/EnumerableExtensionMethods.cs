@@ -39,12 +39,14 @@ public static class EnumerableExtensionMethods
 		{ action(enumerate); }
 		return doForEach;
 	}
+
 	/// <summary>Uses a given action on every item in the array.</summary>
 	/// <typeparam name="T">Any object or primitive.</typeparam>
 	/// <param name="array">The array to work on.</param>
 	/// <param name="action">The action to perform.</param>
+	/// <param name="backwards">To iterate on the array backwards</param>
 	/// <returns>The given reference to the array for extended processing.</returns>
-	public static T[] DoForEach<T>(this T[] array, Action<T, int> action)
+	public static T[] DoForEach<T>(this T[] array, Action<T, int> action, bool backwards = false)
 	{
 		if (action == null)
 		{ throw new ArgumentException("Action can't be null", nameof(action)); }
@@ -52,17 +54,21 @@ public static class EnumerableExtensionMethods
 		if (array == null)
 		{ throw new ArgumentException("Array can't be null", nameof(array)); }
 
-		for (int index = 0; index < array.Length; index++)
+		int start = backwards ? array.Length - 1 : 0;
+		int end = backwards ? 0 : array.Length;
+		for (int index = start; index < end; index++)
 		{ action(array[index], index); }
 
 		return array;
 	}
+
 	/// <summary>Uses a given action on every item in the list.</summary>
 	/// <typeparam name="T">Any object or primitive.</typeparam>
 	/// <param name="list">The list to work on.</param>
 	/// <param name="action">The action to perform.</param>
+	/// <param name="backwards">To iterate on the array backwards</param>
 	/// <returns>The given reference to the list for extended processing.</returns>
-	public static List<T> DoForEach<T>(this List<T> list, Action<T, int> action)
+	public static List<T> DoForEach<T>(this List<T> list, Action<T, int> action, bool backwards = false)
 	{
 		if (action == null)
 		{ throw new ArgumentException("Action can't be null", nameof(action)); }
@@ -70,7 +76,9 @@ public static class EnumerableExtensionMethods
 		if (list == null)
 		{ throw new ArgumentException("List can't be null", nameof(list)); }
 
-		for (int index = 0; index < list.Count; index++)
+		int start = backwards ? list.Count - 1 : 0;
+		int end = backwards ? 0 : list.Count;
+		for (int index = start; index < end; index++)
 		{ action(list[index], index); }
 
 		return list;

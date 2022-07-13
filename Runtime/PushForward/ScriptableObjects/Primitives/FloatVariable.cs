@@ -12,7 +12,7 @@ namespace PushForward.ScriptableObjects.Primitives
     using System;
     using UnityEngine;
 
-    [CreateAssetMenu(menuName = "ScriptableObjects/Float", order = 2)]
+    [CreateAssetMenu(menuName = "ScriptableObjects/Variable/Float", order = 2)]
     public class FloatVariable : ScriptableObject, ISerializationCallbackReceiver
     {
         public float initialValue;

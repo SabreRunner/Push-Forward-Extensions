@@ -25,6 +25,6 @@ namespace PushForward.EventSystem
 
 		/// <summary>Overriding for the basic listener is just a simple event.</summary>
         protected override void OnEventRaised()
-        { this.eventResponse.Invoke(); }
+        { this.eventResponse?.Invoke(); }
     }
 }
