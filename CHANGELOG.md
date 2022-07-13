@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.7
+* Added backwards iteration on enumerables where possible.
+* Added changing of values and invoking events in variable references.
+
 ## 0.5.6
 * Changed GetMainCamera to Component Extension Method.
 
