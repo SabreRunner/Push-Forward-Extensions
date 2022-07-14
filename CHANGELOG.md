@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.5.8
+* Added Map as an alias Select.
+* Added ChainClear for chaining more methods.
+* Added some new property drawers.
+
 ## 0.5.7
 * Added backwards iteration on enumerables where possible.
 * Added changing of values and invoking events in variable references.

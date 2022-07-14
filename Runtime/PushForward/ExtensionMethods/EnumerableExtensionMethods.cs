@@ -83,6 +83,8 @@ public static class EnumerableExtensionMethods
 
 		return list;
 	}
+	public static IEnumerable<TResult> Map<TSource, TResult>(this IEnumerable<TSource> enumerable, Func<TSource, TResult> func)
+		=> enumerable.Select(func);
 	#endregion // do for each
 
 	#region find
@@ -113,6 +115,13 @@ public static class EnumerableExtensionMethods
 		return enumerable.FindFirstOrDefault(predicate);
 	}
 	#endregion // find
+
+	#region general
+	public static Dictionary<TKey, TValue> ChainClear<TKey, TValue>(this Dictionary<TKey, TValue> enumerable)
+	{
+		enumerable.Clear();
+		return enumerable;
+	}
 
 	/// <summary>Returns the last element of an array.</summary>
 	/// <typeparam name="T">The array element type.</typeparam>
@@ -157,7 +166,9 @@ public static class EnumerableExtensionMethods
 		list.Add(newItem);
 		return true;
 	}
+	#endregion // general
 
+	#region string representatioon
 	/// <summary>A more convenient string representation for enumerables.</summary>
 	/// <typeparam name="T">The enumerable type.</typeparam>
 	/// <param name="enumerable">The enumerable to stringify.</param>
@@ -201,4 +212,5 @@ public static class EnumerableExtensionMethods
 	{
 		return quaternion.eulerAngles.StringRepresentation(decimalAccuracy);
 	}
+	#endregion // string representation
 }
