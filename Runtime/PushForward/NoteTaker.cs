@@ -12,9 +12,9 @@ namespace PushForward
 {
 	public class NoteTaker : MonoBehaviour
 	{
-#pragma warning disable IDE0044 // Add readonly modifier
+		#pragma warning disable IDE0044 // Add readonly modifier
 		[Multiline(10), Tooltip("Put notes on the object here."), SerializeField] private string notes;
-#pragma warning restore IDE0044 // Add readonly modifier
+		#pragma warning restore IDE0044 // Add readonly modifier
 
 		private void OnValidate()
 		{
