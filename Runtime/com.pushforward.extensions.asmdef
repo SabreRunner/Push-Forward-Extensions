@@ -1,6 +1,6 @@
 {
     "name": "com.pushforward.extensions",
-    "rootNamespace": "PushForward",
+    "rootNamespace": "",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
