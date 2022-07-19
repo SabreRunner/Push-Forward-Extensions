@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.9
+* Added Anchor Finder.
+* Moved everything to root so namespaces line up.
+
 ## 0.5.8
 * Added Map as an alias Select.
 * Added ChainClear for chaining more methods.
