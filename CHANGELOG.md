@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.1
+* Removed Temp log calls because they are not editor only.
+* Hid Editor scripts behind #if UNITY_EDITOR to avoid build issues.
+
 ## 0.5.9
 * Added Anchor Finder.
 * Moved everything to root so namespaces line up.

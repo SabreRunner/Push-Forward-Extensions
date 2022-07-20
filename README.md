@@ -1,6 +1,7 @@
 # Push Forward Extensions
 The Push Forward Extensions is a collection of useful components to help you get your project off the ground faster.
-The biggest parts are the BaseMonoBehaviour which should be used instead of all MonoBehaviour inheriting and adds several useful methods, the collection of extension methods which allows writing more English-looking code, and the Publisher-Subscriber system that allows you to almost completely decouple all your components and extend it to your own needs.For automatic line drop, you need to use TMP insted of regular Unity's text component.
+The biggest parts are the MonoBehaviour extensions to enhance MonoBehaviour functionality while not interfering with other scripts that replace MonoBehaviour, the collection of extension methods which allows writing more English-looking code, and the Publisher-Subscriber system that allows you to almost completely decouple all your components and extend it to your own needs.
+For automatic line drop, you need to use TMP instead of regular Unity's text component.
 
 ## Installation
 
