@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 namespace PushForward.ScriptableObjects.Primitives.Editor
 {
     using UnityEditor;
@@ -51,3 +52,4 @@ namespace PushForward.ScriptableObjects.Primitives.Editor
         }
     }
 }
+#endif

@@ -32,10 +32,7 @@ namespace PushForward
 		public void Trigger()
 		{
 			#if UNITY_IOS || UNITY_ANDROID || UNITY_STANDALONE || UNITY_EDITOR
-			#if DEBUG
-			if (this.debugLog)
-			{ this.Temp("Platform: " + Application.platform); }
-			#endif
+			// { this.Temp("Platform: " + Application.platform); }
 
 			switch (this.triggerPlatform)
 			{
@@ -63,10 +60,7 @@ namespace PushForward
 					break;
 			}
 			#endif
-			#if DEBUG
-			if (this.debugLog)
-			{ this.Temp("Triggering " + this.triggerEvent.GetPersistentMethodName(0) + " in " + this.triggerDelayInSeconds + " seconds."); }
-			#endif
+			// { this.Temp("Triggering " + this.triggerEvent.GetPersistentMethodName(0) + " in " + this.triggerDelayInSeconds + " seconds."); }
 
 			if (this.triggerDelayInSeconds < float.Epsilon)
 			{ this.triggerEvent.Invoke(); }

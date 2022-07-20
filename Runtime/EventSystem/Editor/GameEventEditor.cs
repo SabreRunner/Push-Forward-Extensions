@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 namespace PushForward.EventSystem.Editor
 {
     using UnityEditor;
@@ -18,3 +19,4 @@ namespace PushForward.EventSystem.Editor
         }
     }
 }
+#endif
