@@ -168,7 +168,10 @@ namespace UnityEngine
 		/// <param name="mb">The Monobehaviour to run this from.</param>
 		/// <param name="actionToCall">The action to call when predicate fulfilled.</param>
 		/// <param name="predicate">The predicate to check for every frame.</param>
+		[ObsoleteAttribute("Use the other version of this method.", false)]
 		public static Coroutine ActionWhenPredicate(this MonoBehaviour mb, Action actionToCall, Func<bool> predicate)
+		{ return mb.ActiveInHierarchy() ? mb.StartCoroutine(mb.ActionWhenPredicateCoroutine(actionToCall, predicate)) : null; }
+		public static Coroutine ActionWhenPredicate(this MonoBehaviour mb, Func<bool> predicate, Action actionToCall)
 		{ return mb.ActiveInHierarchy() ? mb.StartCoroutine(mb.ActionWhenPredicateCoroutine(actionToCall, predicate)) : null; }
 		private static IEnumerator ActionEachFrameForSecondsCoroutine(this MonoBehaviour mb, Action<float> actionToCall, float amountOfSecondsToTake)
 		{
@@ -191,7 +194,10 @@ namespace UnityEngine
 		///  <param name="mb">The MonoBehaviour to run this from.</param>
 		///  <param name="actionToCall">The action to call every frame with the seconds count.</param>
 		///  <param name="amountOfSecondsToTake">The time frame in which to call the action every frame.</param>
+		[ObsoleteAttribute("Use the other version of this method.", false)]
 		public static Coroutine ActionEachFrameForSeconds(this MonoBehaviour mb, Action<float> actionToCall, float amountOfSecondsToTake)
+		{ return mb.ActiveInHierarchy() ? mb.StartCoroutine(mb.ActionEachFrameForSecondsCoroutine(actionToCall, amountOfSecondsToTake)) : null; }
+		public static Coroutine ActionEachFrameForSeconds(this MonoBehaviour mb, float amountOfSecondsToTake, Action<float> actionToCall)
 		{ return mb.ActiveInHierarchy() ? mb.StartCoroutine(mb.ActionEachFrameForSecondsCoroutine(actionToCall, amountOfSecondsToTake)) : null; }
 		private static IEnumerator ActionInSecondsCoroutine(this MonoBehaviour mb, Action actionToStart, float secondsToWait)
 		{
@@ -209,7 +215,10 @@ namespace UnityEngine
 		/// <param name="mb">The MonoBehaviour to run this from.</param>
 		/// <param name="actionToStart">The given action to invoke</param>
 		/// <param name="secondsToWait">The amount to wait before action, in seconds</param>
+		[ObsoleteAttribute("Use the other version of this method.", false)]
 		public static Coroutine ActionInSeconds(this MonoBehaviour mb, Action actionToStart, float secondsToWait)
+		{ return mb.ActiveInHierarchy() ? mb.StartCoroutine(mb.ActionInSecondsCoroutine(actionToStart, secondsToWait)) : null; }
+		public static Coroutine ActionInSeconds(this MonoBehaviour mb, float secondsToWait, Action actionToStart)
 		{ return mb.ActiveInHierarchy() ? mb.StartCoroutine(mb.ActionInSecondsCoroutine(actionToStart, secondsToWait)) : null; }
 		private static IEnumerator ActionInFramesCoroutine(this MonoBehaviour mb, Action actionToStart, int framesToWait)
 		{
@@ -227,7 +236,10 @@ namespace UnityEngine
 		/// <param name="mb">The MonoBehaviour to run this from.</param>
 		/// <param name="actionToStart">The given action to invoke</param>
 		/// <param name="framesToWait">The amount to wait before action, in frames</param>
+		[ObsoleteAttribute("Use the other version of this method.", false)]
 		public static Coroutine ActionInFrames(this MonoBehaviour mb, Action actionToStart, int framesToWait)
+		{ return mb.ActiveInHierarchy() ? mb.StartCoroutine(mb.ActionInFramesCoroutine(actionToStart, framesToWait)) : null; }
+		public static Coroutine ActionInFrames(this MonoBehaviour mb, int framesToWait, Action actionToStart)
 		{ return mb.ActiveInHierarchy() ? mb.StartCoroutine(mb.ActionInFramesCoroutine(actionToStart, framesToWait)) : null; }
 		private static IEnumerator ActionEachFrameWhilePredicateCoroutine(this MonoBehaviour mb, Action actionToCall, Func<bool> predicate, int skipFrames)
 		{
@@ -254,7 +266,10 @@ namespace UnityEngine
 		/// <param name="actionToCall">The action to invoke.</param>
 		/// <param name="predicate">The predicate to check.</param>
 		/// <param name="skipFrames">The amount of frames to skip between actions.</param>
+		[ObsoleteAttribute("Use the other version of this method.", false)]
 		public static Coroutine ActionEachFrameWhilePredicate(this MonoBehaviour mb, Action actionToCall, Func<bool> predicate, int skipFrames = 0)
+		{ return mb.ActiveInHierarchy() ? mb.StartCoroutine(mb.ActionEachFrameWhilePredicateCoroutine(actionToCall, predicate, skipFrames)) : null; }
+		public static Coroutine ActionEachFrameWhilePredicate(this MonoBehaviour mb, Func<bool> predicate, Action actionToCall, int skipFrames = 0)
 		{ return mb.ActiveInHierarchy() ? mb.StartCoroutine(mb.ActionEachFrameWhilePredicateCoroutine(actionToCall, predicate, skipFrames)) : null; }
 
 		/// <summary>Does the action now if the scene is loaded or when it finishes loading.</summary>
@@ -267,7 +282,7 @@ namespace UnityEngine
 
 			if (SceneManagement.SceneManager.GetActiveScene().isLoaded)
 			{ action(); }
-			else { return mb.ActionWhenPredicate(action, () => SceneManagement.SceneManager.GetActiveScene().isLoaded); }
+			else { return mb.ActionWhenPredicate(action, ()=> SceneManagement.SceneManager.GetActiveScene().isLoaded); }
 			return null;
 		}
 		#endregion // coroutines
@@ -285,7 +300,7 @@ namespace UnityEngine
 		/// <summary>Milliseconds since epoch</summary>
 		public static double CurrentTimeInMilliseconds
 			=> DateTime.Now.Subtract(new DateTime(1970, 01, 01)).TotalMilliseconds;
-		#endregion
+		#endregion // timing
 
 		#region logging
 		private static Dictionary<string, double> timeTagsDictionary;
@@ -366,7 +381,7 @@ namespace UnityEngine
 		public static void Error(this ScriptableObject scriptableObject, string debugMessage,
 								[System.Runtime.CompilerServices.CallerMemberName] string methodName = default)
 		{ Debug.LogError(string.Format("{0}.{1}: {2}", scriptableObject.GetType().Name, methodName, debugMessage)); }
-		#endregion
+		#endregion // logging
 		#endregion // MonoBehaviour
 
         #region children methods

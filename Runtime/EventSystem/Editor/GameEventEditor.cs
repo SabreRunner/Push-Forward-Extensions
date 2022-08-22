@@ -1,8 +1,9 @@
-#if UNITY_EDITOR
+// #if UNITY_EDITOR
 namespace PushForward.EventSystem.Editor
 {
     using UnityEditor;
     using UnityEngine;
+    using Editor = UnityEditor.Editor;
 
     [CustomEditor(typeof(GameEvent), editorForChildClasses: true)]
     public class EventEditor : Editor
@@ -19,4 +20,4 @@ namespace PushForward.EventSystem.Editor
         }
     }
 }
-#endif
+// #endif

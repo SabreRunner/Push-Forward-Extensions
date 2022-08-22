@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.2
+* Fixed GameEventBool not public.
+* Added reversed action calls. Older versions deprecated.
+
 ## 0.6.1
 * Removed Temp log calls because they are not editor only.
 * Hid Editor scripts behind #if UNITY_EDITOR to avoid build issues.
