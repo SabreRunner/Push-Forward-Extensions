@@ -241,10 +241,12 @@ namespace PushForward.ExtensionMethods
 		#endregion // circle add
 
 		#region transforms
+		#region breakdown
 		public static Vector4 ToVector4(this Quaternion quaternion) => new(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
 		public static (float, float, float) Breakdown(this Vector3 vec) => (vec.x, vec.y, vec.z);
-		public static (float, float, float, float) Breakdown(this Quaternion quaternion)
-			=> (quaternion.w, quaternion.x, quaternion.y, quaternion.z);
+		public static (float, float, float, float) Breakdown(this Quaternion quaternion) => (quaternion.w, quaternion.x, quaternion.y, quaternion.z);
+		#endregion // breakdown
+		
 		public static float DistanceTo(this Vector3 from, Vector3 to) => Vector3.Distance(from, to);
 		public static Quaternion RotationTo(this Quaternion from, Quaternion to)
 		{
@@ -252,6 +254,6 @@ namespace PushForward.ExtensionMethods
 			rotation.SetFromToRotation(from.eulerAngles, to.eulerAngles);
 			return rotation;
 		}
-		#endregion
+		#endregion // transforms
 	}
 }

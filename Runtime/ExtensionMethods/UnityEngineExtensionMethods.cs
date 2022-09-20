@@ -497,7 +497,6 @@ namespace UnityEngine
 
 		public static void DestroyAllChildren(this Transform transform)
 		{
-			Debug.Log("Destrying children of " + transform.name + " transform.");
 			if (Application.isPlaying)
 			{
 				// get the children in a list
@@ -507,11 +506,7 @@ namespace UnityEngine
 				// unparent everything
 				transform.DetachChildren();
 				// destroy objects
-				childList.ForEach(go =>
-								  {
-									  Debug.Log("Removing child " + go.name);
-									  Object.Destroy(go);
-								  });
+				childList.ForEach(go => Object.Destroy(go));
 			}
 			else
 			{
@@ -520,7 +515,6 @@ namespace UnityEngine
 				// if we have more key code objects
 				for (int childIndex = 0; childIndex < transform.transform.childCount; childIndex++)
 				{
-					Debug.Log("Child " + childIndex);
 					// save them for removal
 					Transform unnecessaryTransform = transform.transform.GetChild(childIndex);
 					unnecessaryTransform.SetParent(null);
