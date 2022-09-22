@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.6.3
+* Removed GameEventEditor from runtime.
+
 ## 0.6.2
 * Fixed GameEventBool not public.
 * Added reversed action calls. Older versions deprecated.
