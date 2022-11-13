@@ -17,3 +17,4 @@ Consult [install packages from git](https://docs.unity3d.com/Manual/upm-ui-gitur
 There are several ways to use this package
 
 * Android Manager: For taking care of Native Android access as well as toasts.
+* Runtime\Unity Extension Methods: Various methods to make basic unity functions easier and more elegant. Just try the methods available on game objects and components. Try to write logic in proper English.

@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 0.6.4
+* Added documentation to Unity Extension Methods.
+
 ## 0.6.3
 * Removed GameEventEditor from runtime.
 
