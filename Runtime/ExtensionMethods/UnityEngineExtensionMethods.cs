@@ -138,11 +138,11 @@ namespace UnityEngine
 		#region properties
 		/// <summary>The path to this object through the hierarchy.</summary>
 		/// <remarks>This is a heavy calculating call. Use sparingly and cache your results.</remarks>
-		public static string ObjectPath(this MonoBehaviour mb)
+		public static string ObjectPath(this Component component)
 		{
 			// create a list of objects from this one to the root
 			List<GameObject> pathObjects = new List<GameObject>();
-			Transform current = mb.transform;
+			Transform current = component.transform;
 			do
 			{
 				pathObjects.Add(current.gameObject);
