@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.6.5
+* Documentation and clean up on aisle MathExtensionMethods.
+* Documentation and clean up on aisle Timer.
+* Added double output event to UnityEvents for use in Timer.
+
 ## 0.6.4
 * Added documentation to Unity Extension Methods.
 

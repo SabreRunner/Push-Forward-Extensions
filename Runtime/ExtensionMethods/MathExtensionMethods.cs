@@ -8,6 +8,7 @@
  * Last Updated: 2022-06-27
 */
 
+// ReSharper disable once CheckNamespace
 namespace PushForward.ExtensionMethods
 {
 	#region using
@@ -24,15 +25,33 @@ namespace PushForward.ExtensionMethods
 		/// <returns>Biggest of the two.</returns>
 		public static TimeSpan Max(this TimeSpan timeSpan, TimeSpan other)
 		{ return timeSpan.Ticks > other.Ticks ? timeSpan : other; }
+		/// <summary>Maximum function for TimeSpan.</summary>
+		/// <param name="timeSpan">First TimeSpan</param>
+		/// <param name="milliseconds">Milliseconds to  compare</param>
+		/// <returns>Biggest of the two.</returns>
 		public static TimeSpan Max(this TimeSpan timeSpan, double milliseconds)
 		{ return timeSpan.TotalMilliseconds > milliseconds ? timeSpan : TimeSpan.FromMilliseconds(milliseconds); }
 		#endregion // max
 
 		#region between
+		/// <summary>Make sure the number is between the low and high values.</summary>
+		/// <param name="number">The number to check.</param>
+		/// <param name="low">The low limit.</param>
+		/// <param name="high">The high limit.</param>
+		/// <param name="inclusive">Whether to include limits or not.</param>
+		/// <returns>True if the number is between the values, false otherwise.</returns>
 		public static bool Between(this int number, int low, int high, bool inclusive = true)
-		{ return inclusive ? number >= low && number <= high : number > low && number < high; }
+			=> inclusive ? number >= low && number <= high : number > low && number < high;
+
+		/// <summary>Make sure the number is between the low and high values.</summary>
+		/// <param name="number">The number to check.</param>
+		/// <param name="low">The low limit.</param>
+		/// <param name="high">The high limit.</param>
+		/// <param name="inclusive">Whether to include limits or not.</param>
+		/// <returns>True if the number is between the values, false otherwise.</returns>
 		public static bool Between(this float number, float low, float high, bool inclusive = true)
-		{ return inclusive ? number >= low && number <= high : number > low && number < high; }
+			=> inclusive ? number >= low && number <= high : number > low && number < high;
+
 		/// <summary>Make sure the number is between the low and high values.</summary>
 		/// <param name="number">The number to check.</param>
 		/// <param name="low">The low limit.</param>
@@ -40,9 +59,7 @@ namespace PushForward.ExtensionMethods
 		/// <param name="inclusive">Whether to include limits or not.</param>
 		/// <returns>True if the number is between the values, false otherwise.</returns>
 		public static bool Between(this long number, long low, long high, bool inclusive = true)
-		{
-			return inclusive ? number >= low && number <= high : number > low && number < high;
-		}
+			=> inclusive ? number >= low && number <= high : number > low && number < high;
 
 		/// <summary>Make sure the number is between the low and high values.</summary>
 		/// <param name="number">The number to check.</param>
@@ -51,16 +68,18 @@ namespace PushForward.ExtensionMethods
 		/// <param name="inclusive">Whether to include limits or not.</param>
 		/// <returns>True if the number is between the values, false otherwise.</returns>
 		public static bool Between(this double number, double low, double high, bool inclusive = true)
-		{
-			return inclusive ? number >= low && number <= high : number > low && number < high;
-		}
+			=> inclusive ? number >= low && number <= high : number > low && number < high;
 
+		/// <summary>Make sure the vector is between the low and high values.</summary>
+		/// <remarks>This is an algebraic function comparing inner values against each other, not vectors in 3D space.</remarks>
+		/// <param name="vector">the vector to check</param>
+		/// <param name="low">The low limit.</param>
+		/// <param name="high">The high limit.</param>
+		/// <param name="inclusive">Whether to include limits or not.</param>
+		/// <returns>True if the vector is between the values, false otherwise.</returns>
 		public static bool Between(this Vector2 vector, Vector2 low, Vector2 high, bool inclusive = true)
-		{
-			return inclusive
-						? vector.x >= low.x && vector.x <= high.x && vector.y >= low.y && vector.y <= high.y
+			=> inclusive ? vector.x >= low.x && vector.x <= high.x && vector.y >= low.y && vector.y <= high.y
 							: vector.x > low.x && vector.x < high.x && vector.y > low.y && vector.y < high.y;
-		}
 		#endregion // between
 
 		#region within
@@ -70,7 +89,7 @@ namespace PushForward.ExtensionMethods
 		/// <param name="target">The target to check around.</param>
 		/// <returns>True if <see cref="tested"/> is within <see cref="distance"/> of <see cref="target"/></returns>
 		public static bool Within(this float tested, float distance, float target)
-		{ return tested.Between(target - distance, target + distance); }
+			=> tested.Between(target - distance, target + distance);
 		#endregion // within
 
 		#region round
@@ -104,14 +123,7 @@ namespace PushForward.ExtensionMethods
 		/// <param name="max">Maximum value</param>
 		/// <returns>The clamped number.</returns>
 		public static long Clamp(this long value, long min, long max)
-		{
-			if (value > max)
-			{ value = max; }
-			else if (value < min)
-			{ value = min; }
-
-			return value;
-		}
+			=> value > max ? max : value < min ? min : value;
 
 		/// <summary>Clamp a float to min and max.</summary>
 		/// <param name="value">The number to clamp.</param>
@@ -126,13 +138,7 @@ namespace PushForward.ExtensionMethods
 		/// <param name="max">Maximum value</param>
 		/// <returns>The clamped number.</returns>
 		public static double Clamp(this double value, double min, double max)
-		{
-			if (value > max)
-			{ value = max; }
-			else if (value < min)
-			{ value = min; }
-			return value;
-		}
+			=> value > max ? max : value < min ? min : value;
 
 		/// <summary>Clamp a float to 0 and 1.</summary>
 		/// <param name="value">The number to clamp.</param>
@@ -172,7 +178,7 @@ namespace PushForward.ExtensionMethods
 		/// <remarks>The comparison is Epsilon based. The check is whether the difference between the two numbers is below a certain threshold called Epsilon (accessible in this class)</remarks>
 		/// <returns>True if they are sufficiently close, false otherwise</returns>
 		public static bool FloatEqual(this float value, float other)
-		{ return (value - other).Abs() < float.Epsilon; }
+			=> (value - other).Abs() < float.Epsilon;
 		#endregion
 
 		#region sign
@@ -242,12 +248,16 @@ namespace PushForward.ExtensionMethods
 
 		#region transforms
 		#region breakdown
+		/// <summary>Convert a Quaternion to a Vector4 of values.</summary>
 		public static Vector4 ToVector4(this Quaternion quaternion) => new(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
-		public static (float, float, float) Breakdown(this Vector3 vec) => (vec.x, vec.y, vec.z);
-		public static (float, float, float, float) Breakdown(this Quaternion quaternion) => (quaternion.w, quaternion.x, quaternion.y, quaternion.z);
+		/// <summary>Convert a Vector3 to a tuple of floats.</summary>
+		public static (float, float, float) Breakdown(this Vector3 vec3) => (vec3.x, vec3.y, vec3.z);
+		/// <summary>Convert a Quaternion to a tuple of floats.</summary>
+		public static (float, float, float, float) Breakdown(this Quaternion quaternion) => (quaternion.x, quaternion.y, quaternion.z, quaternion.w);
 		#endregion // breakdown
-		
+		/// <summary>Get the absolute distance between the 'from' vector to the 'to' vector.</summary>
 		public static float DistanceTo(this Vector3 from, Vector3 to) => Vector3.Distance(from, to);
+		/// <summary>Get the rotation between the 'from' rotation to the 'to' rotation.</summary>
 		public static Quaternion RotationTo(this Quaternion from, Quaternion to)
 		{
 			Quaternion rotation = Quaternion.identity;
