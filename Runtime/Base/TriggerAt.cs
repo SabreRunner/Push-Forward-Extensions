@@ -1,6 +1,15 @@
-namespace PushForward
+/*
+	Trigger At
+
+	Description: A multi use system for triggering public methods automatically under specific conditions.
+
+	Created by: Eran "Sabre Runner" Arbel.
+	Last Updated: 2022-11-22
+*/
+
+
+namespace PushForward.Base
 {
-	using System;
 	using UnityEngine;
 	using UnityEngine.Events;
 
@@ -17,15 +26,12 @@ namespace PushForward
 		#endregion //enums
 
 		#region fields
-#pragma warning disable IDE0044 // Add readonly modifier
-		[SerializeField] private TriggerPoint triggerPoint;
-		[SerializeField] private TriggerPlatform triggerPlatform;
-		[SerializeField] private float triggerDelayInSeconds;
-#if DEBUG
-		[SerializeField] private bool debugLog;
-#endif
-		[SerializeField] private UnityEvent triggerEvent;
-#pragma warning restore IDE0044 // Add readonly modifier
+		#pragma warning disable IDE0044 // Add readonly modifier
+		[SerializeField, Tooltip("Under what condition to trigger.")] private TriggerPoint triggerPoint;
+		[SerializeField, Tooltip("Under which OS to trigger.")] private TriggerPlatform triggerPlatform;
+		[SerializeField, Tooltip("Delay the trigger by seconds.")] private float triggerDelayInSeconds;
+		[SerializeField, Tooltip("The event to trigger.")] private UnityEvent triggerEvent;
+		#pragma warning restore IDE0044 // Add readonly modifier
 		#endregion //fields
 
 		[ContextMenu("Trigger")]
@@ -36,41 +42,24 @@ namespace PushForward
 
 			switch (this.triggerPlatform)
 			{
-				case TriggerPlatform.Standalone:
-					if (Application.platform != RuntimePlatform.LinuxPlayer
-						&& Application.platform != RuntimePlatform.OSXPlayer
-						&& Application.platform != RuntimePlatform.WindowsPlayer)
-					{ return; }
-					break;
-				case TriggerPlatform.Android:
-					if (Application.platform != RuntimePlatform.Android
-						&& Application.platform != RuntimePlatform.WindowsEditor)
-					{ return; }
-					break;
-				case TriggerPlatform.iOS:
-					if (Application.platform != RuntimePlatform.IPhonePlayer
-						&& Application.platform != RuntimePlatform.OSXEditor)
-					{ return; }
-					break;
-				case TriggerPlatform.Editor:
-					if (Application.platform != RuntimePlatform.LinuxEditor
-						&& Application.platform != RuntimePlatform.WindowsEditor
-						&& Application.platform != RuntimePlatform.OSXEditor)
-					{ return; }
-					break;
+				case TriggerPlatform.Standalone: if (Application.platform is not RuntimePlatform.LinuxPlayer and not RuntimePlatform.OSXPlayer
+																			and not RuntimePlatform.WindowsPlayer) { return; } break;
+				case TriggerPlatform.Android: if (Application.platform is not RuntimePlatform.Android and not RuntimePlatform.WindowsEditor)
+												{ return; } break;
+				case TriggerPlatform.iOS: if (Application.platform is not RuntimePlatform.IPhonePlayer and not RuntimePlatform.OSXEditor)
+											{ return; } break;
+				case TriggerPlatform.Editor: if (Application.platform is not RuntimePlatform.LinuxEditor and not RuntimePlatform.WindowsEditor
+																		and not RuntimePlatform.OSXEditor) { return; } break;
 			}
 			#endif
 			// { this.Temp("Triggering " + this.triggerEvent.GetPersistentMethodName(0) + " in " + this.triggerDelayInSeconds + " seconds."); }
 
 			if (this.triggerDelayInSeconds < float.Epsilon)
 			{ this.triggerEvent.Invoke(); }
-			else { this.ActionInSeconds(this.triggerEvent.Invoke, this.triggerDelayInSeconds); }
+			else { this.ActionInSeconds(this.triggerDelayInSeconds, this.triggerEvent.Invoke); }
 		}
 
-		public void AbortTrigger()
-		{
-			this.StopAllCoroutines();
-		}
+		public void AbortTrigger() => this.StopAllCoroutines();
 
 		#region engine
 		private void TriggerOn(TriggerPoint point)
@@ -86,16 +75,16 @@ namespace PushForward
 		private void OnDestroy() => this.TriggerOn(TriggerPoint.Destroyed);
 		private void Update() => this.TriggerOn(TriggerPoint.Update);
 		private void OnCollisionEnter(Collision collision) => this.TriggerOn(TriggerPoint.CollisionEnter);
-		private void OnCollisionEnter2D(Collision2D col) => this.TriggerOn(TriggerPoint.CollisionEnter);
-		private void OnCollisionStay(Collision collisionInfo) => this.TriggerOn(TriggerPoint.CollisionStay);
+		private void OnCollisionEnter2D(Collision2D collision) => this.TriggerOn(TriggerPoint.CollisionEnter);
+		private void OnCollisionStay(Collision collision) => this.TriggerOn(TriggerPoint.CollisionStay);
 		private void OnCollisionStay2D(Collision2D collision) => this.TriggerOn(TriggerPoint.CollisionStay);
 		private void OnCollisionExit(Collision other) => this.TriggerOn(TriggerPoint.CollisionExit);
 		private void OnCollisionExit2D(Collision2D other) => this.TriggerOn(TriggerPoint.CollisionExit);
-		private void OnTriggerEnter(Collider col) => this.TriggerOn(TriggerPoint.TriggerEnter);
+		private void OnTriggerEnter(Collider other) => this.TriggerOn(TriggerPoint.TriggerEnter);
 		private void OnTriggerEnter2D(Collider2D other) => this.TriggerOn(TriggerPoint.TriggerEnter);
-		private void OnTriggerStay(Collider col) => this.TriggerOn(TriggerPoint.TriggerStay);
+		private void OnTriggerStay(Collider other) => this.TriggerOn(TriggerPoint.TriggerStay);
 		private void OnTriggerStay2D(Collider2D other) => this.TriggerOn(TriggerPoint.TriggerStay);
-		private void OnTriggerExit(Collider col) => this.TriggerOn(TriggerPoint.TriggerExit);
+		private void OnTriggerExit(Collider other) => this.TriggerOn(TriggerPoint.TriggerExit);
 		private void OnTriggerExit2D(Collider2D other) => this.TriggerOn(TriggerPoint.TriggerExit);
 		#endregion // engine
 	}

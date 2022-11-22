@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.6.6
+* Documentation and clean up on aisle ApplicationPublicAccess.
+* Documentation on aisle TriggerAt
+
 ## 0.6.5
 * Documentation and clean up on aisle MathExtensionMethods.
 * Documentation and clean up on aisle Timer.

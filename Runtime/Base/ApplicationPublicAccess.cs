@@ -4,7 +4,7 @@
 	Description: Open Unity Engine calls for inspector use.
 
 	Created by: Eran "Sabre Runner" Arbel.
-	Last Updated: 2020-02-11
+	Last Updated: 2022-11-22
 */
 
 #region using
@@ -17,28 +17,28 @@ using UnityEngine;
 
 namespace PushForward.Base
 {
-	public class ApplicationPublicAccess : MonoBehaviour
+	using System;
+
+	public class ApplicationPublicAccess : SingletonBehaviour<ApplicationPublicAccess>
 	{
+		#if UNITY_ANDROID
 		[SerializeField] private bool quitOnAndroidBackButton;
+		#endif
 		[Tooltip("If set to (-1,-1) will not force.")]
 		[SerializeField] private Vector2 forceResolution = -Vector2.one;
 
+		public event Action<List<byte[]>> LocalIPsEvent;
 		//<summary>Find all the local ip addresses on the network.</summary>
-		public static List<byte[]> LocalIPs
+		public List<byte[]> GetLocalIPs()
 		{
-			get
-			{
-				List<byte[]> bytes = new List<byte[]>();
-				IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
+			IPHostEntry host = Dns.GetHostEntry(Dns.GetHostName());
 
-				foreach (IPAddress ipAddress in host.AddressList)
-				{
-					if (ipAddress.AddressFamily == AddressFamily.InterNetwork)
-					{ bytes.Add(ipAddress.GetAddressBytes()); }
-				}
+			List<byte[]> bytes
+				= new(host.AddressList.Where(address => address.AddressFamily is AddressFamily.InterNetwork or AddressFamily.InterNetworkV6)
+						  .Select(address => address.GetAddressBytes()));
 
-				return bytes.Any() ? bytes : null;
-			}
+			ApplicationPublicAccess.Instance.LocalIPsEvent?.Invoke(bytes.Any() ? bytes : null);
+			return bytes.Any() ? bytes : null;
 		}
 
 		///<summary>Open an external browser with the given url.</summary>
@@ -47,11 +47,8 @@ namespace PushForward.Base
 			Application.OpenURL(url);
 		}
 
-		///<summary>Close the applicating within the given amount of seconds.</summary>
-		public void Quit(float delayInSeconds = 0)
-		{
-			this.ActionInSeconds(() => Application.Quit(), delayInSeconds);
-		}
+		///<summary>Close the application within the given amount of seconds.</summary>
+		public void Quit(float delayInSeconds = 0) => this.ActionInSeconds(delayInSeconds, Application.Quit);
 
 		///<summary>Wait for escape key.</summary>
 		// TODO: change to new InputSystem
@@ -61,7 +58,7 @@ namespace PushForward.Base
 			{ this.Quit(); }
 		}
 
-		///<summary>Force resolution.<//summary>
+		///<summary>Force resolution.</summary>
 		private void Awake()
 		{
 			if (!this.forceResolution.Equals(-Vector2.one))

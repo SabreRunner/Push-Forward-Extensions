@@ -17,7 +17,9 @@ Consult [install packages from git](https://docs.unity3d.com/Manual/upm-ui-gitur
 There are several ways to use this package
 
 * Android Manager: For taking care of Native Android access as well as toasts.
+* Application Public Access: Exposes several useful application functions for editor event use.
 * Timer: A user-defined timer component that can output numbers and text as well as trigger events at certain times.
+* TriggerAt: A component that allows you to trigger public function at specified times.
 * Unity Events: A collection of extension to the regular UnityEvent that allows you to pass different variables.
 * Unity Extension Methods: Various methods to make basic unity functions easier and more elegant. Just try the methods available on game objects and components. Try to write logic in proper English. (It's not in the ExtensionMethods namespace because they need to be accessible to primitive Unity objects)
 * Extension Methods\Math Extension Methods: Various methods to make math function easier and moore elegant. Just try the methods available on int, float, and others. Try to write logic in proper English. 
