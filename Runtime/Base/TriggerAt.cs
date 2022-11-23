@@ -10,6 +10,7 @@
 
 namespace PushForward.Base
 {
+	using System;
 	using UnityEngine;
 	using UnityEngine.Events;
 
@@ -17,11 +18,11 @@ namespace PushForward.Base
 	{
 		#region enums
 		// ReSharper disable UnusedMember.Local
-		private enum TriggerPoint { Never = 0, Awake, Start, Enabled, Disabled, Destroyed, Update,
+		public enum TriggerPoint { Never = 0, Awake, Start, Enabled, Disabled, Destroyed, Update,
 									CollisionEnter, CollisionStay, CollisionExit, TriggerEnter, TriggerStay, TriggerExit }
 
 		// ReSharper disable once InconsistentNaming
-		private enum TriggerPlatform { All = 0, Standalone, Android, iOS, Editor }
+		public enum TriggerPlatform { All = 0, Standalone, Android, iOS, Editor }
 		// ReSharper restore UnusedMember.Local
 		#endregion //enums
 
@@ -33,6 +34,14 @@ namespace PushForward.Base
 		[SerializeField, Tooltip("The event to trigger.")] private UnityEvent triggerEvent;
 		#pragma warning restore IDE0044 // Add readonly modifier
 		#endregion //fields
+
+		public void SetTrigger(TriggerPoint newPoint, Action newEvent, float newDelay = -1f, TriggerPlatform newPlatform = TriggerPlatform.All)
+		{
+			this.triggerPoint = newPoint;
+			this.triggerPlatform = newPlatform;
+			this.triggerEvent = new UnityEvent();
+			this.triggerEvent.AddListener(()=>newEvent());
+		}
 
 		[ContextMenu("Trigger")]
 		public void Trigger()

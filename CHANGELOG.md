@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2022.11.23.67
+* Added setup method to TriggerAt so it can be created programatically.
+
 ## 0.6.6
 * Documentation and clean up on aisle ApplicationPublicAccess.
 * Documentation on aisle TriggerAt
@@ -69,9 +72,3 @@
 
 ## 0.4.8
 * Corrected wrong namespace.
-
-## 0.4.7
-* Removed the need to add the calling method's name in logging methods.
-
-## 0.4.6
-* Fixed reference assemblies in examples.
