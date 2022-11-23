@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 2022.11.23.67
+## 2022.11.23
 * Added setup method to TriggerAt so it can be created programatically.
 
 ## 0.6.6
