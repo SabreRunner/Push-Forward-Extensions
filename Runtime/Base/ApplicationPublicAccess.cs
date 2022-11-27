@@ -54,8 +54,10 @@ namespace PushForward.Base
 		// TODO: change to new InputSystem
 		private void Update()
 		{
+			#if UNITY_ANDROID
 			if (this.quitOnAndroidBackButton && Input.GetKey(KeyCode.Escape))
 			{ this.Quit(); }
+			#endif
 		}
 
 		///<summary>Force resolution.</summary>

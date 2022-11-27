@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2022.11.27
+* Fixed Android pragma if.
+
 ## 2022.11.23
 * Added setup method to TriggerAt so it can be created programatically.
 
@@ -69,6 +72,3 @@
 
 ## 0.4.9
 * Fixed inaccessible GameEventBool.
-
-## 0.4.8
-* Corrected wrong namespace.
