@@ -166,6 +166,15 @@ public static class EnumerableExtensionMethods
 		list.Add(newItem);
 		return true;
 	}
+	
+	/// <summary>Adds an item if it's not in the list or removes it if it is.</summary>
+	/// <param name="list">The list to check.</param>
+	/// <param name="item">The new item to add or remove.</param>
+	public static void AddOrRemove<T>(this List<T> list, T item)
+	{
+		if (!list.AddDistinct<T>(item))
+		{ list.Remove(item); }
+	}
 	#endregion // general
 
 	#region string representatioon

@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023.01.12
+* Added AddOrRemove method to EnumerableExtensionMethods.
+
 ## 2022.11.27
 * Fixed Android pragma if.
 
