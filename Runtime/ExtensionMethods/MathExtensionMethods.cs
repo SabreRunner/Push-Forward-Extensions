@@ -177,8 +177,7 @@ namespace PushForward.ExtensionMethods
 		/// <summary>Compares two floats.</summary>
 		/// <remarks>The comparison is Epsilon based. The check is whether the difference between the two numbers is below a certain threshold called Epsilon (accessible in this class)</remarks>
 		/// <returns>True if they are sufficiently close, false otherwise</returns>
-		public static bool FloatEqual(this float value, float other)
-			=> (value - other).Abs() < float.Epsilon;
+		public static bool IsApproximately(this float value, float other) => Mathf.Approximately(value, other);
 		#endregion
 
 		#region sign
