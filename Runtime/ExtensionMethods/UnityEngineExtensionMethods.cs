@@ -229,7 +229,7 @@ namespace UnityEngine
 			if (actionToStart == null || secondsToWait < 0)
 			{ yield break; }
 
-			if (!secondsToWait.FloatEqual(0))
+			if (!secondsToWait.IsApproximately(0))
 			{ yield return new WaitForSeconds(secondsToWait); }
 
 			actionToStart();

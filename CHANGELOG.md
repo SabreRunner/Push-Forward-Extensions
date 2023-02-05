@@ -1,9 +1,9 @@
 # CHANGELOG
 
-## 2023.02.05
+## 2023.2.5
 * Replaced FloatEqual with use of Mathf.Approximately.
 
-## 2023.01.12
+## 2023.1.12
 * Added AddOrRemove method to EnumerableExtensionMethods.
 
 ## 2022.11.27

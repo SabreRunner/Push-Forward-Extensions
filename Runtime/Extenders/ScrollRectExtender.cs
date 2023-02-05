@@ -5,7 +5,7 @@
  *
  * Created by: Eran "Sabre Runner" Arbel.
  *
- * Last Updated: 2022-06-12
+ * Last Updated: 2023-2-5
 */
 
 namespace PushForward.Extenders
@@ -42,13 +42,14 @@ namespace PushForward.Extenders
             /// <returns>True if inside the area, false otherwise.</returns>
             private bool ValueInsideArea(Vector2 scrollValue)
             {
-                switch (this.checkFor)
-                {
-                    case CheckFor.X: return scrollValue.x.Between(this.low.x, this.high.x);
-                    case CheckFor.Y: return scrollValue.y.Between(this.low.y, this.high.y);
-                    case CheckFor.Both: return scrollValue.Between(this.low, this.high);
-                    default: throw new ArgumentOutOfRangeException();
-                }
+                return this.checkFor switch
+                    {
+                        CheckFor.X => scrollValue.x.Between(this.low.x, this.high.x),
+                        CheckFor.Y => scrollValue.y.Between(this.low.y, this.high.y),
+                        CheckFor.Both => scrollValue.Between(this.low, this.high),
+                        CheckFor.Unknown => throw new ArgumentOutOfRangeException(),
+                        _ => throw new ArgumentOutOfRangeException()
+                    };
             }
 
             /// <summary>Check a scroll value against the event and trigger accordingly.</summary>
@@ -57,10 +58,11 @@ namespace PushForward.Extenders
             {
                 bool newInside = this.ValueInsideArea(scrollValue);
 
-                if (this.previousInside && !newInside)
-                { this.actionOnExit?.Invoke(); }
-                else if (!this.previousInside && newInside)
-                { this.actionOnEnter?.Invoke(); }
+                switch (this.previousInside)
+                {
+                    case true when !newInside: this.actionOnExit?.Invoke(); break;
+                    case false when newInside: this.actionOnEnter?.Invoke(); break;
+                }
 
                 this.previousInside = newInside;
             }
@@ -75,12 +77,12 @@ namespace PushForward.Extenders
             float t = 0;
             float a = this.scrollRect.horizontalNormalizedPosition;
 
-            this.ActionEachFrameWhilePredicate(
-                () =>
-                {
-                    t += Time.deltaTime * this.lerpSpeed;
-                    this.scrollRect.horizontalNormalizedPosition = Mathf.Lerp(a, value, t);
-                }, () => !t.FloatEqual(1));
+            this.ActionEachFrameWhilePredicate(() => !t.IsApproximately(1),
+                                               () =>
+                                               {
+                                                   t += Time.deltaTime * this.lerpSpeed;
+                                                   this.scrollRect.horizontalNormalizedPosition = Mathf.Lerp(a, value, t);
+                                               });
         }
 
         public void LerpToVerticalValue(float value)
@@ -88,12 +90,12 @@ namespace PushForward.Extenders
             float t = 0;
             float a = this.scrollRect.verticalNormalizedPosition;
 
-            this.ActionEachFrameWhilePredicate(
+            this.ActionEachFrameWhilePredicate(()=> !t.IsApproximately(1),
                 () =>
                 {
                     t += Time.deltaTime * this.lerpSpeed;
                     this.scrollRect.verticalNormalizedPosition = Mathf.Lerp(a, value, t);
-                }, () => !t.FloatEqual(1));
+                });
         }
 
         public void ValueChanged(Vector2 value)
