@@ -8,6 +8,7 @@
  * Last Updated: 2018-11-08
 */
 
+// ReSharper disable once CheckNamespace
 namespace PushForward.Physics
 {
 	using System.Text;
@@ -29,16 +30,16 @@ namespace PushForward.Physics
 		[SerializeField] private StringEvent hitInfoStringEvent;
 		#endregion // inspector fields
 
-		private Ray TargetingRay => new Ray(this.transform.position, this.transform.forward * this.maxDistance);
+		private Ray TargetingRay => new(this.transform.position, this.transform.forward * this.maxDistance);
 
 		public void Raycast()
 		{
 			// this.Temp("Casting from " + this.transform.position + " towards " + this.transform.forward
 					  // + " for " + this.maxDistance + " meters.");
-			if (UnityEngine.Physics.Raycast(this.TargetingRay, out RaycastHit hitInfo, this.maxDistance))
+			if (Physics.Raycast(this.TargetingRay, out RaycastHit hitInfo, this.maxDistance, Physics.AllLayers))
 			{
 				StringBuilder hitInfoSB = new StringBuilder("Hit.")
-					.Append("\nTarget: ").Append(hitInfo.transform.gameObject.name)
+					.Append("\nTarget: ").Append(hitInfo.transform.ObjectPath())
 					.Append("\nPosition: ").Append(hitInfo.point.StringRepresentation())
 					.Append("\nDistance: ").Append(hitInfo.distance)
 					.Append("\nProjected from: ").Append(this.transform.position.StringRepresentation())
@@ -53,7 +54,7 @@ namespace PushForward.Physics
 			else { this.hitNothingEvent?.Invoke(); }
 		}
 
-		#if DEBUG
+		#if UNITY_EDITOR
 		private void OnDrawGizmosSelected()
 		{
 			Gizmos.color = Color.green;

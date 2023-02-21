@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023.2.21
+* Updated collider name text in RaycastHitter.cs.
+
 ## 2023.2.5
 * Replaced FloatEqual with use of Mathf.Approximately.
 
