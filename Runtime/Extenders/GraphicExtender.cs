@@ -101,15 +101,15 @@ namespace PushForward.Extenders
 		{
 			if (this.graphicToExtend != null)
 			{
-				this.ActionEachFrameForSeconds(seconds =>
-												{
-													float fraction = seconds / secondsToFade;
-													if (this.fadeColour)
-													{ this.GraphicColourAlpha = 1 - fraction; }
-													if (this.fadeMaterial)
-													{ this.GraphicMaterialAlpha = 1 - fraction; }
-												}, secondsToFade);
-				this.ActionInSeconds(this.triggerAtFadeOutEnd.Invoke, secondsToFade);
+				this.ActionEachFrameForSeconds(secondsToFade, seconds =>
+															  {
+																  float fraction = seconds / secondsToFade;
+																  if (this.fadeColour)
+																  { this.GraphicColourAlpha = 1 - fraction; }
+																  if (this.fadeMaterial)
+																  { this.GraphicMaterialAlpha = 1 - fraction; }
+															  });
+				this.ActionInSeconds(secondsToFade, this.triggerAtFadeOutEnd.Invoke);
 			}
 		}
 		#endregion // methods

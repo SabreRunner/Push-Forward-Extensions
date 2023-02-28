@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023.2.28
+* Shifted FadeOut away from obsolete Actions
+
 ## 2023.2.21
 * Updated collider name text in RaycastHitter.cs.
 
