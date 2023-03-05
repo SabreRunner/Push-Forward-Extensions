@@ -309,16 +309,28 @@ namespace UnityEngine
 			else { return mb.ActionWhenPredicate(()=> SceneManagement.SceneManager.GetActiveScene().isLoaded, action); }
 			return null;
 		}
+		/// <summary>The time until a stalling sequence is aborted. (To save memory).</summary>
+		public static float ActionSequenceTimeoutInSeconds = 60f;
 		private static IEnumerator ActionSequenceCoroutine(this MonoBehaviour mb, params (Func<bool>, Action)[] sequence)
 		{
 			Func<bool> sequencePredicate;
 			Action sequenceAction;
+			float timeoutCounter = 0f;
 			
 			for (int sequenceIndex = 0; sequenceIndex < sequence.Length
 									    && (sequencePredicate = sequence[sequenceIndex].Item1) is not null
 										&& (sequenceAction = sequence[sequenceIndex].Item2) is not null; sequenceIndex++)
 			{
-				yield return new WaitUntil(sequencePredicate);
+				// yield return new WaitUntil(sequencePredicate);
+				// if not time yet, advance the timeout counter and wait
+				if (!sequencePredicate())
+				{
+					timeoutCounter += Time.deltaTime;
+					// if it's time to timeout, break out.
+					if (timeoutCounter > EngineExtensionMethods.ActionSequenceTimeoutInSeconds)
+					{ yield break; }
+					yield return null;
+				}
 				sequenceAction();
 			}
 		}
@@ -333,6 +345,7 @@ namespace UnityEngine
 				mb.Warn("Sequence is null or empty.");
 				return null;
 			}
+
 			return mb.StartCoroutine(mb.ActionSequenceCoroutine(sequence));
 		}
 		#endregion // coroutines

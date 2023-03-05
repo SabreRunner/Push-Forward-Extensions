@@ -2,6 +2,7 @@
 
 ## 2023.3.5
 * Added Action Sequence so you can create a sequence of actions to run following a set of predicates.
+* Added timeout counter to ActionSequence.
 
 ## 2023.2.28
 * Shifted FadeOut away from obsolete Actions
