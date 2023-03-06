@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023.3.6
+* Fixed if in action sequence to while.
+
 ## 2023.3.5
 * Added Action Sequence so you can create a sequence of actions to run following a set of predicates.
 * Added timeout counter to ActionSequence.

@@ -323,7 +323,7 @@ namespace UnityEngine
 			{
 				// yield return new WaitUntil(sequencePredicate);
 				// if not time yet, advance the timeout counter and wait
-				if (!sequencePredicate())
+				while (!sequencePredicate())
 				{
 					timeoutCounter += Time.deltaTime;
 					// if it's time to timeout, break out.
