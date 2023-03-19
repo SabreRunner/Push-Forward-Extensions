@@ -114,6 +114,10 @@ public static class EnumerableExtensionMethods
 	{
 		return enumerable.FindFirstOrDefault(predicate);
 	}
+	public static int IndexOf<T>(this T[] array, T element) => Array.IndexOf(array, element);
+	public static int IndexOf<T>(this List<T> list, T element) => list.IndexOf(element);
+	public static int LastIndexOf<T>(this T[] array, T element) => Array.LastIndexOf(array, element);
+	public static int LastIndexOf<T>(this List<T> list, T element) => list.LastIndexOf(element);
 	#endregion // find
 
 	#region general

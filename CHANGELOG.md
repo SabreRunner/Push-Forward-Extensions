@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023.3.19
+* Added Index finding methods to arrays and lists.
+
 ## 2023.3.6
 * Fixed if in action sequence to while.
 
