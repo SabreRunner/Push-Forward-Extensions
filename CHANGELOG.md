@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023.5.10
+* Update getting resource address to be possible for any Resources folder.
+
 ## 2023.3.19
 * Added Index finding methods to arrays and lists.
 
