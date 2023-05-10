@@ -21,13 +21,13 @@ namespace PushForward.Physics
 		#region inspector fields
 		#pragma warning disable IDE0044 // Add readonly modifier
 		[Tooltip("The Prefab to instantiate.")]
-		[SerializeField] private GameObject prefab;
+		[SerializeField] protected GameObject prefab;
 		[Tooltip("Where in the hierarchy to put the new object?")]
-		[SerializeField] private LineageEnum lineage;
+		[SerializeField] protected LineageEnum lineage;
 		[Tooltip("What is the position offset to add?")]
-		[SerializeField] private Vector3 positionOffset = Vector3.zero;
+		[SerializeField] protected Vector3 positionOffset = Vector3.zero;
 		[Tooltip("What is the rotation offset to add?")]
-		[SerializeField] private Vector3 rotationOffset = Vector3.zero;
+		[SerializeField] protected Vector3 rotationOffset = Vector3.zero;
 		#pragma warning restore IDE0044 // Add readonly modifier
 		#endregion // inspector fields
 
@@ -35,6 +35,18 @@ namespace PushForward.Physics
 		{
 			get => this.prefab;
 			set => this.prefab = value;
+		}
+
+		protected Transform GetParentObject(Transform thisTransform)
+		{
+			return this.lineage switch
+				{
+					LineageEnum.Child => thisTransform,
+					LineageEnum.Sibling => thisTransform.parent,
+					LineageEnum.Parent => thisTransform.parent,
+					LineageEnum.Root => null,
+					_ => throw new ArgumentOutOfRangeException()
+				};
 		}
 
 		/// <summary>Instantiates set prefab by parameters and returns it</summary>
@@ -45,24 +57,15 @@ namespace PushForward.Physics
 			{ return null; }
 
 			// instantiate according to lineage
-			var thisTransform = this.transform;
-			var thisParent = thisTransform.parent;
-			Transform parent = this.lineage switch
-								{
-									LineageEnum.Child => thisTransform,
-									LineageEnum.Sibling => thisParent,
-									LineageEnum.Parent => thisParent,
-									LineageEnum.Root => null,
-									_ => throw new ArgumentOutOfRangeException()
-								};
+			Transform thisTransform = this.transform;
+			GameObject newObject = Instantiate(this.prefab, this.GetParentObject(thisTransform));
 
-			GameObject newObject = Instantiate(this.prefab, parent);
+			bool isRootObject = newObject.transform.parent == null;
 
 			// add required offsets
-			newObject.transform.localPosition += this.positionOffset
-													+ (newObject.transform.parent == null ? this.transform.position : Vector3.zero);
-			newObject.transform.localRotation *= Quaternion.Euler(this.rotationOffset)
-													* (newObject.transform.parent == null ? this.transform.rotation : Quaternion.identity);
+			newObject.transform.localPosition += this.positionOffset + (isRootObject ? this.transform.position : Vector3.zero);
+			newObject.transform.localRotation *= Quaternion.Euler(this.rotationOffset) * (isRootObject ? this.transform.rotation : Quaternion.identity);
+
 			if (this.lineage == LineageEnum.Parent)
 			{ thisTransform.SetParent(newObject.transform, true); }
 

@@ -118,14 +118,17 @@ namespace UnityEngine
 		///  <param name="prefab">The prefab in question.</param>
 		///  <param name="suffix">Resource paths shouldn't have extensions so let's get rid of it.</param>
 		///  <returns>The path to it INSIDE resources (excluding that folder)</returns>
-		public static string GetPrefabPathInResources(this GameObject prefab, string suffix)
+		public static string GetPrefabPathInResources(this GameObject prefab, string suffix = ".prefab")
 		{
 			if (prefab == null)
 			{ return null; }
 			
 			#if UNITY_EDITOR
 			if (AssetDatabase.TryGetGUIDAndLocalFileIdentifier(prefab, out string guid, out long file))
-			{ return AssetDatabase.GUIDToAssetPath(guid).Replace("Assets/Resources/", string.Empty).Replace(suffix, string.Empty); }
+			{
+				string path = AssetDatabase.GUIDToAssetPath(guid);
+				return path.Remove(0, path.IndexOf("/Resources/") + 11).Replace(suffix, null);
+			}
 			#endif
 			
 			return null;
