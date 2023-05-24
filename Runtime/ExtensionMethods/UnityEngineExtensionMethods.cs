@@ -127,7 +127,8 @@ namespace UnityEngine
 			if (AssetDatabase.TryGetGUIDAndLocalFileIdentifier(prefab, out string guid, out long file))
 			{
 				string path = AssetDatabase.GUIDToAssetPath(guid);
-				return path.Remove(0, path.IndexOf("/Resources/") + 11).Replace(suffix, null);
+				return !path.ContainsInvariantCultureIgnoreCase("resources") ? path
+						   : path.Remove(0, path.IndexOf("/Resources/") + 11).Replace(suffix, null);
 			}
 			#endif
 			
