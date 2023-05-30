@@ -332,7 +332,10 @@ namespace UnityEngine
 					timeoutCounter += Time.deltaTime;
 					// if it's time to timeout, break out.
 					if (timeoutCounter > EngineExtensionMethods.ActionSequenceTimeoutInSeconds)
-					{ yield break; }
+					{
+						mb.Warn("Operation timed out after " + EngineExtensionMethods.ActionSequenceTimeoutInSeconds);
+						yield break;
+					}
 					yield return null;
 				}
 				sequenceAction();
