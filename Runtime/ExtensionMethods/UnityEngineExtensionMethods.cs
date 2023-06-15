@@ -434,7 +434,7 @@ namespace UnityEngine
 								  mb.ObjectPath(), mb.GetType().Name, methodName, debugMessage)); }
 		public static void Temp(this ScriptableObject scriptableObject, string debugMessage,
 								[System.Runtime.CompilerServices.CallerMemberName] string methodName = default)
-		{ Debug.Log(string.Format("<color=green>{0}.{1}: {2}</color>",
+		{ Debug.Log(string.Format("<color=cyan>{0}.{1}: {2}</color>",
 								  scriptableObject.GetType().Name, methodName, debugMessage)); }
 		#endif
 
@@ -465,7 +465,7 @@ namespace UnityEngine
 		// Methods for handling childrens of objects
         #region children methods
 		/// <summary>Get all the children objects of the given object.</summary>
-		public static GameObject[] GetChildObjects(this GameObject gameObject)
+		public static GameObject[] GetAllChildObjects(this GameObject gameObject)
 		{
 			GameObject[] objects = new GameObject[gameObject.transform.childCount];
 			for (int objectIndex = 0; objectIndex < gameObject.transform.childCount; objectIndex++)
@@ -478,10 +478,8 @@ namespace UnityEngine
 		public static GameObject FindChildByName(this GameObject gameObject, string name)
 		{
 			// if bad parameters, abort
-			if (gameObject == null)
-			{ throw new ArgumentException("GameObject can't be null.", nameof(gameObject)); }
-			if (string.IsNullOrEmpty(name))
-			{ throw new ArgumentException("Name can't be null or empty", nameof(name)); }
+			if (gameObject == null) { throw new ArgumentException("GameObject can't be null.", nameof(gameObject)); }
+			if (string.IsNullOrEmpty(name)) { throw new ArgumentException("Name can't be null or empty", nameof(name)); }
 
 			// if this is the desired child, return
 			if (gameObject.name == name)
@@ -606,6 +604,6 @@ namespace UnityEngine
 				#endif
 			}
 		}
-		#endregion
-    }
+		#endregion // children methods
+	}
 }

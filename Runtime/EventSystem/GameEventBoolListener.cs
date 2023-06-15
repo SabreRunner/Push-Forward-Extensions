@@ -8,7 +8,7 @@ namespace PushForward.EventSystem
     {
 		/// <summary>This listener's event is an event with a number.</summary>
 		[SerializeField] private GameEventBool gameEventBool;
-		protected override GameEvent GameEvent => this.gameEventBool;
+		public override GameEvent GameEvent => this.gameEventBool;
 		/// <summary>This listener's event gets an integer.</summary>
 		[SerializeField] private BoolEvent eventResponse;
 

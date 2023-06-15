@@ -16,7 +16,7 @@ namespace PushForward.EventSystem
     {
         /// <summary>This listener's event is an event with a prefab.</summary>
         [SerializeField] private GameEventPrefab gameEventPrefab;
-        protected override GameEvent GameEvent => this.gameEventPrefab;
+		public override GameEvent GameEvent => this.gameEventPrefab;
         /// <summary>This listener's event gets a prefab.</summary>
         [SerializeField] private PrefabEvent prefabResponse;
 

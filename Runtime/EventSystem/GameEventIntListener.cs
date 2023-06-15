@@ -18,7 +18,7 @@ namespace PushForward.EventSystem
     {
 		/// <summary>This listener's event is an event with a number.</summary>
 		[SerializeField] private GameEventInt gameEventInt;
-		protected override GameEvent GameEvent => this.gameEventInt;
+		public override GameEvent GameEvent => this.gameEventInt;
 		/// <summary>This listener's event gets an integer.</summary>
 		public IntEvent intResponse;
 		/// <summary>Activate event with int as index.</summary>
