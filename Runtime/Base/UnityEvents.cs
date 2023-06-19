@@ -26,5 +26,5 @@ namespace PushForward.Base
 	[Serializable] public class HitInfoEvent : UnityEvent<RaycastHit> { }
 	[Serializable] public class TransformEvent : UnityEvent<Transform> { }
 	[Serializable] public class TimeSpanEvent : UnityEvent<TimeSpan> { }
-	[Serializable] public class PrefabEvent : UnityEvent<GameObject> { }
+	[Serializable] public class GameObjectEvent : UnityEvent<GameObject> { }
 }

@@ -83,15 +83,13 @@ namespace PushForward.Extenders
 		{
 			if (this.graphicToExtend != null)
 			{
-				this.ActionEachFrameForSeconds(seconds =>
-												{
-													float fraction = seconds / secondsToFade;
-													if (this.fadeColour)
-													{ this.GraphicColourAlpha = fraction; }
-													if (this.fadeMaterial)
-													{ this.GraphicMaterialAlpha = fraction; }
-												}, secondsToFade);
-				this.ActionInSeconds(this.triggerAtFadeInEnd.Invoke, secondsToFade);
+				this.ActionEachFrameForSeconds(secondsToFade, seconds =>
+															  {
+																  float fraction = seconds / secondsToFade;
+																  if (this.fadeColour) { this.GraphicColourAlpha = fraction; }
+																  if (this.fadeMaterial) { this.GraphicMaterialAlpha = fraction; }
+															  });
+				this.ActionInSeconds(secondsToFade, this.triggerAtFadeInEnd.Invoke);
 			}
 		}
 

@@ -19,7 +19,6 @@ namespace PushForward.EventSystem
 		/// <summary>The actual game event.</summary>
         [SerializeField] private GameEvent gameEvent;
 
-		[SerializeField, Tooltip("The class to use to get the event.")] private GameEventGetter eventGetter;
 		public override GameEvent GameEvent => this.gameEvent;
 		/// <summary>The event response event is unique to every listener.</summary>
 		[SerializeField] private UnityEvent eventResponse;
