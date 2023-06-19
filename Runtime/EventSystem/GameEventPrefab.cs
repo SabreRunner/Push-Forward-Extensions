@@ -4,14 +4,14 @@ namespace PushForward.EventSystem
     using UnityEngine;
 
     /// <summary>An extension of the game event that contains a prefab.</summary>
-    [CreateAssetMenu(menuName = "ScriptableObjects/Event System/Game Event Prefab", order = 26)]
-    public class GameEventPrefab : GameEvent
+    [CreateAssetMenu(menuName = "Event System/Game Event Prefab", order = 26)]
+    public class GameEventGameObject : GameEvent
     {
-        public GameObject prefab;
+        public GameObject gameObject;
 
-        public void Raise(GameObject newPrefab)
+        public void Raise(GameObject newGameObject)
         {
-            this.prefab = newPrefab;
+            this.gameObject = newGameObject;
             this.Raise();
         }
     }

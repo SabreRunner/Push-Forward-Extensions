@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 2023.6.19
+* Added Array breakdown from 2,3, and 4 Tuples.
+* Replaced game events listeners field with a Property.
+* Allowed assigning of Game Events to listeners for injection (Might revert this, don't count on it).
+* Added event getter so you can specify how to get the event if you can't assign it in advance (for example, when instantiating from Addressables).
+* Changed temp log color to Cyan because it's easier to read with a darker play theme in editor.
+* Moved all events SOs into their own Event System directory in Create menu.
+
 ## 2023.5.10
 * Update getting resource address to be possible for any Resources folder.
 

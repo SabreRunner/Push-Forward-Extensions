@@ -247,6 +247,10 @@ namespace PushForward.ExtensionMethods
 
 		#region transforms
 		#region breakdown
+		public static float[] ToArray(this Tuple<float, float> tuple) => new []{ tuple.Item1, tuple.Item2 };
+		public static float[] ToArray(this Tuple<float, float, float> tuple) => new []{ tuple.Item1, tuple.Item2, tuple.Item3 };
+		public static float[] ToArray(this Tuple<float, float, float, float> tuple)
+			=> new []{ tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4 };
 		/// <summary>Convert a Quaternion to a Vector4 of values.</summary>
 		public static Vector4 ToVector4(this Quaternion quaternion) => new(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
 		/// <summary>Convert a Vector3 to a tuple of floats.</summary>

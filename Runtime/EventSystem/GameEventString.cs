@@ -12,7 +12,7 @@ namespace PushForward.EventSystem
     using UnityEngine;
 
     /// <summary>An extension of the game event that contains a boolean.</summary>
-    [CreateAssetMenu(menuName = "ScriptableObjects/Event System/Game Event String", order = 27)]
+    [CreateAssetMenu(menuName = "Event System/Game Event String", order = 27)]
     public class GameEventString : GameEvent
     {
         public string @string;

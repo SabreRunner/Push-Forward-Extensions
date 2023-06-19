@@ -14,7 +14,7 @@ namespace PushForward.EventSystem
 
 	/// <summary>The very basic game event.
 	///		Just registers listeners and raises events.</summary>
-    [CreateAssetMenu(menuName = "ScriptableObjects/Event System/Game Event", order = 20)]
+    [CreateAssetMenu(menuName = "Event System/Game Event", order = 20)]
     public class GameEvent : ScriptableObject
     {
 		[SerializeField] private List<GameEventListenerBase> listeners;

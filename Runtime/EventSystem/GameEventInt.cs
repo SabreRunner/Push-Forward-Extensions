@@ -12,7 +12,7 @@ namespace PushForward.EventSystem
 	using UnityEngine;
 
 	/// <summary>An extension of the game event that contains an int.</summary>
-	[CreateAssetMenu(menuName = "ScriptableObjects/Event System/Game Event Integer", order = 21)]
+	[CreateAssetMenu(menuName = "Event System/Game Event Integer", order = 21)]
 	public class GameEventInt : GameEvent
 	{
 		public int integer;
