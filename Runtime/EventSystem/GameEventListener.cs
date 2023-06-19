@@ -18,8 +18,9 @@ namespace PushForward.EventSystem
     {
 		/// <summary>The actual game event.</summary>
         [SerializeField] private GameEvent gameEvent;
+		public EventGetter<GameEvent> gameEventGetter;
 
-		public override GameEvent GameEvent => this.gameEvent;
+		public override GameEvent GameEvent => this.gameEvent ??= this.gameEventGetter?.GetEventAction.Invoke();
 		/// <summary>The event response event is unique to every listener.</summary>
 		[SerializeField] private UnityEvent eventResponse;
 

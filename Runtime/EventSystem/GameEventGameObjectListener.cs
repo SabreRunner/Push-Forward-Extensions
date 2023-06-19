@@ -17,7 +17,9 @@ namespace PushForward.EventSystem
     {
         /// <summary>This listener's event is an event with a prefab.</summary>
         [FormerlySerializedAs("gameEventPrefab"),SerializeField] private GameEventGameObject gameEventGameObject;
-		public override GameEvent GameEvent => this.gameEventGameObject;
+		// ReSharper disable once UnassignedField.Global -- assigned, if needed, at user runtime.
+		public EventGetter<GameEventGameObject> gameObjectEventGetter;
+		public override GameEvent GameEvent => this.gameEventGameObject ??= this.gameObjectEventGetter?.GetEventAction();
         /// <summary>This listener's event gets a prefab.</summary>
         [FormerlySerializedAs("prefabResponse"),SerializeField] private GameObjectEvent gameObjectResponse;
 

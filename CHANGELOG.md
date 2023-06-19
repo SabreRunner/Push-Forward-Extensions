@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023.6.19.1
+* Added event getters to every listener and finished testing it. 
+
 ## 2023.6.19
 * Added Array breakdown from 2,3, and 4 Tuples.
 * Replaced game events listeners field with a Property.

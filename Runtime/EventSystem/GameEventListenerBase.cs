@@ -18,8 +18,14 @@ namespace PushForward.EventSystem
 	///		2. Create an EventInjector ScriptableObject.
 	///		3. Create serialised fields for all the events you want to inject.
 	///		4. Create backing fields for the Getters you need for these events.
-	///		5. Give it static Properties to retrieve the specific events you need and use Lazy Evaluation to create the getter if it's not instanced.
-	///		6. When you need the event you call "[DependencyInjector].[SpecificEvent]</remarks>
+	///		5. Give it a static Instance property to retrieve the EventInjector.
+	///		6. When you need the event getter you call "[DependencyInjector].Instance.[SpecificEventGetter].
+	///
+	///		We need all of this to keep the Base Listener abstract and inheritable as it is and the inherited listeners simple.</remarks>
+	/// <example>
+	///		public class InstantiationEventGetter : EventGetter<GameEventInstantiation>
+	///		{ public InstantiationEventGetter(Func<GameEventInstantiation> eventToGet) : base(eventToGet) { } }
+	/// </example>
 	public abstract class EventGetter<TGameEvent> where TGameEvent : GameEvent
 	{
 		public Func<TGameEvent> GetEventAction { private set; get; }
@@ -27,21 +33,19 @@ namespace PushForward.EventSystem
 	}
 
 	/// <summary>The base game event listener.
-	///		Defines the game event and the event raised method.
+	///		Defines the Game Event property, the Game Event Getter and the on event raised method.
 	///		handles registration and unregistration.</summary>
 	public abstract class GameEventListenerBase : MonoBehaviour
 	{
 		[SerializeField, Tooltip("Whether to respond to events even if the object is disabled.")] protected bool respondWhenDisabled;
-		[Tooltip("The class to use to get the event.")] public EventGetter<GameEvent> gameEventGetter;
-		/// <summary>Every listener must have its event.
-		///		an abstract property allows casting from any derived extensions.</summary>
+		/// <summary>Every listener must have its event. An abstract property allows casting from any derived extensions.</summary>
+		/// <remarks>With the addition of Event Getters, they are also not specifically mentioned here but need to be used
+		///		as part of this property. Create one, create a field for one, and use it if you can't assign an event directly.</remarks>
 		public abstract GameEvent GameEvent { get; }
 
 		private void OnEnable()
 		{
 			GameEvent gameEvent = this.GameEvent;
-			if (gameEvent == null && this.gameEventGetter != null)
-			{ gameEvent = this.gameEventGetter.GetEventAction(); }
 			if (gameEvent != null)
 			{ gameEvent.RegisterListener(this); }
 		}
