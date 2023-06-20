@@ -17,8 +17,19 @@ namespace PushForward.EventSystem
         /// <summary>This listener's event is an event with a number.</summary>
         [SerializeField] private GameEventString gameEventString;
 		// ReSharper disable once UnassignedField.Global -- assigned, if needed, at user runtime.
-		public EventGetter<GameEventString> stringEventGetter;
+		private EventGetter<GameEventString> stringEventGetter;
 		public override GameEvent GameEvent => this.gameEventString ??= this.stringEventGetter?.GetEventAction();
+		public EventGetter<GameEventString> StringEventGetter
+		{
+			get => this.stringEventGetter;
+			set
+			{
+				Object.Destroy(this.gameEventString);
+				this.gameEventString = null;
+				this.stringEventGetter = value;
+			}
+		}
+
         /// <summary>This listener's event gets an integer.</summary>
         [SerializeField] private StringEvent eventResponse;
 

@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023.6.20
+* Added destruction of game event in case of assigning an event getter.
+
 ## 2023.6.191
 * Added event getters to every listener and finished testing it. 
 
