@@ -14,7 +14,7 @@ namespace PushForward.ScriptableObjects.Primitives
 	[Serializable]
     public class FloatReference
     {
-		public bool useOverride = true;
+		public bool useOverride;
 		public float overrideValue;
         public bool useInitial;
         public FloatVariable variable;
@@ -41,14 +41,7 @@ namespace PushForward.ScriptableObjects.Primitives
 			this.useOverride = true;
 		}
 
-		public static implicit operator float(FloatReference reference)
-		{
-			return reference.Value;
-		}
-
-		public static implicit operator FloatReference(float value)
-		{
-			return new FloatReference(value);
-		}
+		public static implicit operator float(FloatReference reference) => reference.Value;
+		public static implicit operator FloatReference(float value) => new(value);
 	}
 }

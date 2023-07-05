@@ -14,7 +14,7 @@ namespace PushForward.ScriptableObjects.Primitives
     [Serializable]
     public class IntReference
     {
-		public bool useOverride = true;
+		public bool useOverride;
 		public int overrideValue;
 		public bool useInitial;
         public IntVariable variable;
@@ -34,5 +34,15 @@ namespace PushForward.ScriptableObjects.Primitives
 				}
 			}
 		}
-    }
+
+		public IntReference(int value)
+		{
+			this.overrideValue = value;
+			this.useOverride = true;
+		}
+
+		public static implicit operator int(IntReference reference) => reference.Value;
+		public static implicit operator IntReference(int value) => new(value);
+
+	}
 }

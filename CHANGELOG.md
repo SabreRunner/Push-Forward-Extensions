@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023.7.5
+* Made float and int references use override by default.
+
 ## 2023.6.20
 * Added destruction of game event in case of assigning an event getter.
 
