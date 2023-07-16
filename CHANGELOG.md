@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2023.7.16
+* GetPrefabPathInResources deprecated.
+
 ## 2023.7.5
 * Made float and int references use override by default.
 

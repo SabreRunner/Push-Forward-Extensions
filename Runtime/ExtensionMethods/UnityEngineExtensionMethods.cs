@@ -108,32 +108,6 @@ namespace UnityEngine
 		#endregion // destruction
 
 		public static bool ReferenceEqual(this object obj1, object obj2) => ReferenceEquals(obj1, obj2);
-
-		///  <summary>Gets the prefab's path if it is in the resources folder.</summary>
-		///  <remarks>ASSERT: You are using a prefab!
-		/// 		ASSERT: That prefab is in the Resources folder.
-		/// 		ASSERT: You are running this from Editor and not at runtime.
-		/// 		If any of these are false, behaviour is unknown.
-		/// 		If the last one is false, it just won't work.</remarks>
-		///  <param name="prefab">The prefab in question.</param>
-		///  <param name="suffix">Resource paths shouldn't have extensions so let's get rid of it.</param>
-		///  <returns>The path to it INSIDE resources (excluding that folder)</returns>
-		public static string GetPrefabPathInResources(this GameObject prefab, string suffix = ".prefab")
-		{
-			if (prefab == null)
-			{ return null; }
-			
-			#if UNITY_EDITOR
-			if (AssetDatabase.TryGetGUIDAndLocalFileIdentifier(prefab, out string guid, out long file))
-			{
-				string path = AssetDatabase.GUIDToAssetPath(guid);
-				return !path.ContainsInvariantCultureIgnoreCase("resources") ? path
-						   : path.Remove(0, path.IndexOf("/Resources/") + 11).Replace(suffix, null);
-			}
-			#endif
-			
-			return null;
-		}
         #endregion // Objects and Components
 
 		// Methods that enhances MonoBehaviour
